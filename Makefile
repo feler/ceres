@@ -7,7 +7,7 @@ else
     ECHO=@:
 endif
 
-TARGETS=awesome
+TARGETS=ceres
 BUILDLN=build
 
 all: $(TARGETS) $(BUILDLN) ;
