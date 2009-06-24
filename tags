@@ -1,0 +1,44 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.7	//
+RGB_16TO8	color.c	31;"	d	file:
+RGB_8TO16	color.c	30;"	d	file:
+VERSION	ceres.c	/^const char *VERSION = "0.0001";$/;"	v
+a_xcb_check_cb	awesome.c	/^a_xcb_check_cb(EV_P_ ev_check *w, int revents)$/;"	f	file:
+a_xcb_io_cb	awesome.c	/^a_xcb_io_cb(EV_P_ ev_io *w, int revents)$/;"	f	file:
+at_exit	ceres.c	/^at_exit(void)$/;"	f	file:
+awesome_atexit	awesome.c	/^awesome_atexit(void)$/;"	f
+awesome_restart	awesome.c	/^awesome_restart(void)$/;"	f
+ceres_restart	ceres.c	/^ceres_restart(void)$/;"	f	file:
+check_other_wm	xutil.c	/^check_other_wm(xcb_connection_t *c)$/;"	f
+color_init_reply	color.c	/^color_init_reply(color_init_cookie_t req)$/;"	f
+color_init_unchecked	color.c	/^color_init_unchecked(color_t *color, const char *colstr, ssize_t len)$/;"	f
+color_parse	color.c	/^color_parse(const char *colstr, ssize_t len,$/;"	f	file:
+die	util.c	/^die(const char *errstr)$/;"	f
+exit_help	awesome.c	/^exit_help(int exit_code)$/;"	f	file:
+exit_help	ceres.c	/^exit_help(int code)$/;"	f	file:
+exit_on_signal	awesome.c	/^exit_on_signal(EV_P_ ev_signal *w, int revents)$/;"	f	file:
+exit_signal	ceres.c	/^exit_signal(EV_P_ ev_signal *w, int revents)$/;"	f	file:
+globalconf	awesome.c	/^awesome_t globalconf;$/;"	v
+id	awesome.c	/^    xcb_window_t id;$/;"	m	struct:__anon1	file:
+init_colors_and_font	color.c	/^init_colors_and_font()$/;"	f
+main	awesome.c	/^main(int argc, char **argv)$/;"	f
+main	ceres.c	/^main(int argc, char **argv)$/;"	f
+other_wm_error	ceres.c	/^other_wm_error(void *data,$/;"	f	file:
+restart_on_signal	awesome.c	/^restart_on_signal(EV_P_ ev_signal *w, int revents)$/;"	f	file:
+restart_signal	ceres.c	/^restart_signal(EV_P_ ev_signal *w, int revents)$/;"	f	file:
+root_win_t	awesome.c	/^} root_win_t;$/;"	t	typeref:struct:__anon1	file:
+rootconf	ceres.c	/^ceres_t rootconf;$/;"	v
+scan	awesome.c	/^scan(void)$/;"	f	file:
+set_error_handler	xutil.c	/^set_error_handler(xcb_event_handlers_t *evenths,$/;"	f
+tree_cookie	awesome.c	/^    xcb_query_tree_cookie_t tree_cookie;$/;"	m	struct:__anon1	file:
+warning	util.c	/^warning(const char *warnstr)$/;"	f
+x_error	ceres.c	/^x_error(void *data,$/;"	f	file:
+xcolor_init_reply	color.c	/^xcolor_init_reply(xcolor_init_request_t req)$/;"	f
+xcolor_init_unchecked	color.c	/^xcolor_init_unchecked(xcolor_t *color, const char *colstr, ssize_t len)$/;"	f
+xcolor_to_color	color.c	/^xcolor_to_color(const xcolor_t *xcol, color_t *col)$/;"	f
+xerror	awesome.c	/^xerror(void *data __attribute__ ((unused)),$/;"	f	file:
+xerrorstart	awesome.c	/^xerrorstart(void * data __attribute__ ((unused)),$/;"	f	file:
