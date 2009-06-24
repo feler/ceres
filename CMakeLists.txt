@@ -21,10 +21,10 @@ include_directories(
     ${CERES_REQUIRED_INCLUDE_DIRS}
     ${CERES_OPTIONAL_INCLUDE_DIRS})
 
+# Sources {{{
 set(CER_SRCS 
     ${SOURCE_DIR}/ceres.c
     ${SOURCE_DIR}/util.c
-    ${SOURCE_DIR}/PyC.c
     ${SOURCE_DIR}/draw.c
     ${SOURCE_DIR}/xutil.c
     ${SOURCE_DIR}/color.c
@@ -36,6 +36,7 @@ set(CER_SRCS
     ${SOURCE_DIR}/mouse.c
     ${SOURCE_DIR}/root.c
     ${SOURCE_DIR}/event.c)
+# }}}
 
 add_executable(${PROJECT_CER_NAME} 
     ${CER_SRCS})
@@ -49,3 +50,8 @@ target_link_libraries(${PROJECT_CER_NAME}
     ${CERES_REQUIRED_LIBRARIES}
     ${CERES_OPTIONAL_LIBRARIES})
 
+# Installation {{{
+install(TARGETS ${PROJECT_CER_NAME} RUNTIME DESTINATION bin)
+# }}}
+
+# vim:et:sw=4:ts=8:softtabstop=4:cindent:fdm=marker:tw=80:filetype=cmake
