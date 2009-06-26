@@ -22,6 +22,8 @@
 #ifndef CERES_STRUCTS_H
 #define CERES_STRUCTS_H
 
+/*  Includes {{{
+ */
 /* XCB */
 #include <xcb/xcb.h>
 #include <xcb/xcb_keysyms.h>
@@ -37,6 +39,7 @@
 
 #include "window.h"
 #include "client.h"
+/* }}} */
 
 #define lenof(foo) (ssize_t)sizeof(foo) / (ssize_t)sizeof(foo[0])
 
@@ -87,7 +90,7 @@ struct ceres_t
     /* Event loop */
     struct ev_loop *loop;
     /* Key symbols */
-    struct xcb_key_symbols_t *key_symbols;
+    xcb_key_symbols_t *key_symbols;
     /* font */
     font_t *font;
     /* timer */
@@ -98,7 +101,6 @@ struct ceres_t
         /* The focused client */
         client_t *focus;
     } clients;
-    xcb_event_handlers_t event_handlers;
 }; /*  }}} */
 
 typedef struct ceres_t ceres_t;
@@ -148,6 +150,19 @@ typedef struct
     const char *colstr;
 } xcolor_init_request_t;
 /* }}} */
+
+/* cer_key_t - key struct {{{
+ */
+typedef struct cer_key_t
+{
+    /* Modifier */
+    uint16_t modifier;
+    /* Keysym */
+    xcb_keysym_t keysym;
+    /* Keycode */
+    xcb_keycode_t keycode;
+} cer_key_t; /*  }}} */
+
 #endif
 
 // vim:et:sw=4:ts=8:softtabstop=4:cindent:fdm=marker:tw=80

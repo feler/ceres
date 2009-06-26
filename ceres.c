@@ -79,7 +79,7 @@ event_pre_handler(EV_P_ ev_check *w, int revents)
     }
     if(mouse)
     {
-        xcb_event_handle(&rootconf.event_handlers, mouse);
+        xcb_event_handle(&rootconf.event_h, mouse);
     }
 
     ceres_refresh();
@@ -407,10 +407,10 @@ main(int argc, char **argv)
     /* Init atoms */
     init_atoms();
 
-    /* Key symbols 
+    /* Key symbols  */
     rootconf.key_symbols = xcb_key_symbols_alloc(rootconf.connection);
     xcb_get_modifier_mapping_cookie_t mapping_cookie =
-        xcb_get_modifier_mapping_unchecked(rootconf.connection);*/
+        xcb_get_modifier_mapping_unchecked(rootconf.connection);
 
     /* Init colors and the font */
     init_colors_and_font();
