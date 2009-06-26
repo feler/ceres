@@ -163,6 +163,15 @@ typedef struct cer_key_t
     xcb_keycode_t keycode;
 } cer_key_t; /*  }}} */
 
+/* key_bind_t - key bind struct {{{
+ */
+typedef struct key_bind_t
+{
+    uint16_t modifier;
+    xcb_keysym_t keysym;
+    void (*func)(void);
+} key_bind_t; /*  }}} */
+
 #endif
 
 // vim:et:sw=4:ts=8:softtabstop=4:cindent:fdm=marker:tw=80
