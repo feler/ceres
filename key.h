@@ -27,7 +27,7 @@
 #include "structs.h"
 
 bool keyboard_grab(void);
-bool keyboard_ungrab(void);
+void keyboard_ungrab(void);
 void key_grab_to_window(xcb_window_t, cer_key_t);
 
 #endif
