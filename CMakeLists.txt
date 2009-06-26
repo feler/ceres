@@ -35,6 +35,7 @@ set(CER_SRCS
     ${SOURCE_DIR}/screen.c
     ${SOURCE_DIR}/mouse.c
     ${SOURCE_DIR}/root.c
+    ${SOURCE_DIR}/key.c
     ${SOURCE_DIR}/event.c)
 # }}}
 
