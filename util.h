@@ -19,4 +19,8 @@ void _die(int, const char *, const char *, ...)
                                 string, ## __VA_ARGS__)
 void _warning(int, const char *, const char *, ...)
     __attribute__ ((format(printf, 3, 4)));
+
+#define LENGTH(x)   (sizeof x / sizeof x[0])
 #endif
+
+// vim:et:sw=4:ts=8:softtabstop=4:cindent:fdm=marker:tw=80
