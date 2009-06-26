@@ -33,14 +33,13 @@
 #define RGB_8TO16(i)   (0xffff * ((i) & 0xff) / 0xff)
 #define RGB_16TO8(i)   (0xff * ((i) & 0xffff) / 0xffff)
 
-/* color_parse - Parse an hexadecimal color string to its component. {{{
+/* color_parse - parse an hexadecimal color string to its component. {{{
  * \param colstr The color string.
  * \param len The color string length.
  * \param red A pointer to the red color to fill.
  * \param green A pointer to the green color to fill.
  * \param blue A pointer to the blue color to fill.
  * \param alpha A pointer to the alpha color to fill.
- * \return True if everything alright.
  */
 static int
 color_parse(const char *colstr, ssize_t len,
@@ -68,7 +67,7 @@ color_parse(const char *colstr, ssize_t len,
     else
     {
       invalid:
-        warning("awesome: error, invalid color");
+        warning("ceres: invalid color: %s", colstr);
         return 0;
     }
 
