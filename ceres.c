@@ -47,6 +47,7 @@ const char *VERSION = "-0.0001 - not functional";
 #include "screen.h"
 #include "mouse.h"
 #include "root.h"
+#include "key.h"
 /* }}} */
 
 ceres_t rootconf;

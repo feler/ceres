@@ -24,9 +24,20 @@
 #include <ev.h>
 #include <stdio.h>
 #include <unistd.h>
+#include <stdlib.h>
 
 #include "event.h"
 #include "structs.h"
+#include "xutil.h"
+#include "util.h"
+#include "key.h"
+
+void j_pressed(void);
+void j_pressed(void)
+{
+    fprintf(stderr, " j key pressed\n");
+}
+#include "config.h"
 
 /* EVENT HANDLERS [!!] {{{
  */
@@ -37,8 +48,6 @@ static int
 event_map_request(void *data __attribute__ ((unused)),
                   xcb_connection_t *connection, xcb_map_request_event_t *ev)
 {
-    fprintf(stderr, "Map Request\n");
-
     xcb_get_geometry_cookie_t geom_cookie;
     xcb_get_geometry_reply_t *geom_reply;
 
@@ -56,8 +65,26 @@ static int
 event_enter_notify(void *data __attribute__ ((unused)),
                    xcb_connection_t *connection, xcb_enter_notify_event_t *ev)
 {
-    fprintf(stderr, "Enter notify\n");
     window_set_focus(ev->event);
+
+    return 0;
+} /*  }}} */
+
+/* event_key_press - handle key press events {{{
+ */
+static int
+event_key_press(void *data __attribute__ ((unused)),
+                xcb_connection_t *connection, xcb_key_press_event_t *ev)
+{
+    unsigned int i;
+    
+    xcb_keysym_t keysym;
+    keysym = xcb_key_symbols_get_keysym(rootconf.key_symbols, ev->detail, 0);
+    for(i = 0; i < LENGTH(keys); i++)
+        if(keysym == keys[i].keysym
+           && keys[i].modifier == ev->state
+           && keys[i].func)
+            keys[i].func();
 
     return 0;
 } /*  }}} */
@@ -87,6 +114,7 @@ event_set_handlers(void)
 {
     xcb_event_set_map_request_handler(&rootconf.event_h, event_map_request, NULL);
     xcb_event_set_enter_notify_handler(&rootconf.event_h, event_enter_notify, NULL);
+    xcb_event_set_key_press_handler(&rootconf.event_h, event_key_press, NULL);
 } /*  }}} */
 
 // vim:et:sw=4:ts=8:softtabstop=4:cindent:fdm=marker:tw=80
