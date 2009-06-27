@@ -99,4 +99,15 @@ client_manage(xcb_window_t window, xcb_get_geometry_reply_t *window_geom)
     free(client);
 } /*  }}} */
 
+/* client_get_by_window - get a client by his window {{{
+ */
+client_t *
+client_get_by_window(xcb_window_t window)
+{
+    client_t *client;
+
+    for(client = rootconf.clients; client && client->window != window; client = client->next);
+    return client;
+} /*  }}} */
+
 // vim:et:sw=4:ts=8:softtabstop=4:cindent:fdm=marker:tw=80
