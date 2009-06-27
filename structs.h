@@ -151,18 +151,6 @@ typedef struct
 } xcolor_init_request_t;
 /* }}} */
 
-/* cer_key_t - key struct {{{
- */
-typedef struct cer_key_t
-{
-    /* Modifier */
-    uint16_t modifier;
-    /* Keysym */
-    xcb_keysym_t keysym;
-    /* Keycode */
-    xcb_keycode_t keycode;
-} cer_key_t; /*  }}} */
-
 /* key_bind_t - key bind struct {{{
  */
 typedef struct key_bind_t

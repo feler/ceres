@@ -21,6 +21,7 @@
 
 #include <xcb/xcb.h>
 #include <unistd.h>
+#include <malloc.h>
 
 #include "structs.h"
 #include "xutil.h"
@@ -65,24 +66,15 @@ keyboard_ungrab(void)
 /* key_grab_to_window - grab a key to a window {{{
  */
 void
-key_grab_to_window(xcb_window_t window, cer_key_t key)
+key_grab_to_window(xcb_window_t window, key_bind_t key)
 {
-    /* We have a keycode */
-    if(key.keycode)
-        xcb_grab_key(rootconf.connection, true, window,
-                     key.modifier, key.keycode, XCB_GRAB_MODE_ASYNC,
-                     XCB_GRAB_MODE_ASYNC);
-    /* We have a keysym */
-    else if(key.keysym)
-    {
-        /* Get the keycode, LOOK: rootconf.keysymbols must be initialized */
-        xcb_keycode_t *keycodes = xcb_key_symbols_get_keycode(rootconf.key_symbols, key.keysym);
-        xcb_keycode_t *keycode_counter = keycodes;
-        if(keycodes)
-            for (keycode_counter = keycodes; *keycode_counter; keycode_counter++)
-                xcb_grab_key(rootconf.connection, true, window,
-                             key.modifier, *keycode_counter, XCB_GRAB_MODE_ASYNC, XCB_GRAB_MODE_ASYNC);
-    }
+    /* Get the keycode, LOOK: rootconf.keysymbols must be initialized */
+    xcb_keycode_t *keycodes = xcb_key_symbols_get_keycode(rootconf.key_symbols, key.keysym);
+    xcb_keycode_t *keycode_counter = keycodes;
+    if(keycodes)
+    for (keycode_counter = keycodes; *keycode_counter; keycode_counter++)
+            xcb_grab_key(rootconf.connection, true, window,
+                         key.modifier, *keycode_counter, XCB_GRAB_MODE_ASYNC, XCB_GRAB_MODE_ASYNC);
 } /*  }}} */
 
 // vim:et:sw=4:ts=8:softtabstop=4:cindent:fdm=marker:tw=80
