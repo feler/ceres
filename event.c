@@ -32,7 +32,6 @@
 #include "xutil.h"
 #include "util.h"
 #include "key.h"
-#include "window.h"
 
 void j_pressed(void);
 void j_pressed(void)
@@ -67,7 +66,13 @@ static int
 event_enter_notify(void *data __attribute__ ((unused)),
                    xcb_connection_t *connection, xcb_enter_notify_event_t *ev)
 {
-    window_set_focus(ev->event);
+    client_t *client;
+
+    if(ev->mode != XCB_NOTIFY_MODE_NORMAL)
+        return 0;
+
+    if((client = client_get_by_window(ev->event)))
+        client_set_focus(client);
 
     return 0;
 } /*  }}} */
