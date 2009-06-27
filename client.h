@@ -23,10 +23,13 @@
 #define CERES_CLIENT_H
 
 #include <xcb/xcb.h>
-
-#include "structs.h"
+#include <malloc.h>
+#include <stdio.h>
+#include <unistd.h>
 
 void client_manage(xcb_window_t, xcb_get_geometry_reply_t *);
+void client_attach(client_t *);
+client_t *client_next_tiled(client_t *);
 
 #endif
 

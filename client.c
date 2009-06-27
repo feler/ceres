@@ -24,8 +24,27 @@
 #include <stdio.h>
 #include <unistd.h>
 
-#include "client.h"
 #include "structs.h"
+#include "client.h"
+
+/* client_attach - attach a client to the chain {{{
+ * @param client The client to attach
+ */
+void
+client_attach(client_t *client)
+{
+    client->next = rootconf.clients;
+    rootconf.clients = client;
+} /*  }}} */
+
+/* client_next_tiled - return the next client which can be tiled {{{
+ */
+client_t *
+client_next_tiled(client_t *client)
+{
+    for(; client && (client->is_floating); client = client->next);
+    return 0;
+} /* }}} */
 
 /* client_configure - configure a client with his new attributtes {{{
  * @param client The client to configure
