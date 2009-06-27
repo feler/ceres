@@ -31,6 +31,7 @@ void client_manage(xcb_window_t, xcb_get_geometry_reply_t *);
 void client_attach(client_t *);
 client_t *client_next_tiled(client_t *);
 client_t *client_get_by_window(xcb_window_t);
+void client_set_focus(client_t *);
 
 #endif
 

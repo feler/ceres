@@ -26,6 +26,7 @@
 
 #include "structs.h"
 #include "client.h"
+#include "window.h"
 
 /* client_attach - attach a client to the chain {{{
  * @param client The client to attach
@@ -108,6 +109,14 @@ client_get_by_window(xcb_window_t window)
 
     for(client = rootconf.clients; client && client->window != window; client = client->next);
     return client;
+} /*  }}} */
+
+/* client_set_focus - give focus to a client {{{
+ */
+void
+client_set_focus(client_t *client)
+{
+    window_set_focus(client->window);
 } /*  }}} */
 
 // vim:et:sw=4:ts=8:softtabstop=4:cindent:fdm=marker:tw=80
