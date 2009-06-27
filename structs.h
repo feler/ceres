@@ -36,14 +36,17 @@
 #include <stdbool.h>
 
 #include <ev.h>
-
-#include "window.h"
-#include "client.h"
 /* }}} */
 
 #define lenof(foo) (ssize_t)sizeof(foo) / (ssize_t)sizeof(foo[0])
 
-typedef struct area_t area_t;
+typedef struct area_t 
+{
+    int16_t x;
+    int16_t y;
+    int16_t width;
+    int16_t height;
+}area_t;
 
 /* font_t - font struct {{{
  */
@@ -64,7 +67,8 @@ typedef struct root_window_t
 
 /* client_t - client struct (window, geometry, ...) {{{
  */
-typedef struct client_t
+typedef struct client_t client_t;
+struct client_t
 {
     /* Name */
     char name[256];
@@ -74,9 +78,12 @@ typedef struct client_t
     area_t geometry;
     /* border */
     uint32_t border_width;
-} client_t; /*  }}} */
+    /* Next client */
+    client_t *next;
+    bool is_floating;
+}; /*  }}} */
 
-/* ceres_t - Main struct a.k.a rootconf  {{{
+/* ** ceres_t - Main struct a.k.a rootconf  {{{
  */
 struct ceres_t
 {
@@ -96,11 +103,7 @@ struct ceres_t
     /* timer */
     struct ev_timer timer;
     /* Clients */
-    struct
-    {
-        /* The focused client */
-        client_t *focus;
-    } clients;
+    client_t *clients;
 }; /*  }}} */
 
 typedef struct ceres_t ceres_t;

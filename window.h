@@ -25,16 +25,6 @@
 #include <xcb/xcb.h>
 #include <xcb/xcb_atom.h>
 
-#include "structs.h"
-
-struct area_t
-{
-    int16_t x;
-    int16_t y;
-    int16_t width;
-    int16_t height;
-};
-
 void window_take_focus(xcb_window_t);
 void window_configure(xcb_window_t, uint16_t x, uint16_t y,
         uint16_t width, uint16_t height, int);

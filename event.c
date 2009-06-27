@@ -28,9 +28,11 @@
 
 #include "event.h"
 #include "structs.h"
+#include "client.h"
 #include "xutil.h"
 #include "util.h"
 #include "key.h"
+#include "window.h"
 
 void j_pressed(void);
 void j_pressed(void)

@@ -20,6 +20,7 @@
  */
 
 #include <xcb/xcb.h>
+#include <xcb/xcb_atom.h>
 #include <unistd.h>
 
 #include "structs.h"
