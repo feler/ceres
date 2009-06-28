@@ -112,6 +112,7 @@ at_exit(void)
 } /*  }}} */
 
 /* other_wm_error - callback for the other other wm running error  {{{
+ * @params unused
  */
 static int
 other_wm_error(void *data,
@@ -126,7 +127,8 @@ other_wm_error(void *data,
  * ignored (especially on UnmapNotify's).  Other types of errors call Xlibs
  * default error handler, which may call exit.
  * \param data Currently unused.
- * \param c The connectiont to the X server.  * \param e The error event.
+ * \param c The connectiont to the X server.  
+ * \param e The error event.
  * \return 0 if no error, or xerror's xlib return status.
  */
 static int
@@ -214,6 +216,8 @@ ceres_signal_handler(int signal_num)
     switch(signal_num)
     {
         case SIGSEGV:
+            /* We have a segmentation fault, we are trying to acces
+             * some memory area that we are not permited to */
             die("Segmentation fault, please report");
     }
 } /* }}} */
@@ -369,7 +373,7 @@ main(int argc, char **argv)
     memset(&act.sa_mask, 0, sizeof(sigset_t));
     sigaction(SIGSEGV, &act, 0);
 
-    /* Init Python */
+    /* Init Python, is planned to use python for config files */
     //Py_Initialize();
 
     /* Connect to the X server */
@@ -385,17 +389,15 @@ main(int argc, char **argv)
     xcb_grab_server(rootconf.connection);
     xcb_flush(rootconf.connection);
 
-    /* Get the file descriptor corresponding to the X connection */
+    /* check events setup */
     ev_check xcheck;
-    ev_io xio = { .fd = -1 };
-    xfd = xcb_get_file_descriptor(rootconf.connection);
-    ev_io_init(&xio, &io_event, xfd, EV_READ);
-    ev_io_start(rootconf.loop, &xio);
     ev_check_init(&xcheck, &event_pre_handler);
     ev_check_start(rootconf.loop, &xcheck);
     ev_unref(rootconf.loop);
 
-    /* Check for other wm */
+    /* Check if other window manager is running 
+     * This will put an error in the xcb error stack if another
+     * window manager is running */
     check_other_wm(rootconf.connection);
 
     /* Check if an error has been produced (if any)
@@ -407,19 +409,27 @@ main(int argc, char **argv)
     set_error_handler(&rootconf.event_h, x_error, NULL);
 
     /* Init atoms */
+    /*-------------------------------------------------------------------------
+     *  HOW ATOMS WORK
+     *  In ./atoms/ there is a python script that read the names of determinated
+     *  atoms in a text, and generate his respectives variables, init_atoms()
+     *  set the values of those variables which will used like: WM_PROTOCOLS,
+     *  WM_NAME, ...
+     *-------------------------------------------------------------------------
+     */
     init_atoms();
 
-    /* Key symbols  */
+    /* alloc key symbols  */
     rootconf.key_symbols = xcb_key_symbols_alloc(rootconf.connection);
 
-    /* Init colors and the font */
+    /* Init colors (black and white) and the font */
     init_colors_and_font();
 
-    /* Init all the screens (select fo events too) */
+    /* Init all the screens (select for events too) */
     init_screens();
 
     /* Set the cursor image in all root windows */
-    root_window_set_cursor(68);
+    root_window_set_cursor(68); // 68 = left arrow
 
     /* Scan windows */
     scan();
