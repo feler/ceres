@@ -27,6 +27,8 @@
 #include <stdio.h>
 #include <unistd.h>
 
+void client_detach(client_t *);
+void client_unmanage(client_t *);
 void client_manage(xcb_window_t, xcb_get_geometry_reply_t *);
 void client_attach(client_t *);
 client_t *client_next_tiled(client_t *);

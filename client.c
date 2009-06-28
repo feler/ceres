@@ -28,6 +28,7 @@
 #include "client.h"
 #include "window.h"
 #include "layout.h"
+#include "xutil.h"
 
 /* client_attach - attach a client to the chain {{{
  * @param client The client to attach
@@ -111,7 +112,10 @@ client_get_by_window(xcb_window_t window)
 void
 client_set_focus(client_t *client)
 {
-    window_set_focus(client->window);
+    if(client)
+        window_set_focus(client->window);
+    else
+        window_set_focus(get_default_screen()->root);
 } /*  }}} */
 
 /* client_resize_and_move - resize and move a client {{{
@@ -133,6 +137,36 @@ client_resize_and_move(client_t *client, uint32_t x, uint32_t y, uint32_t width,
                          values);
     client_configure(client);
     xcb_flush(rootconf.connection);
+} /*  }}} */
+
+/* client_detach - detach a client  {{{
+ */
+void
+client_detach(client_t *client)
+{
+    client_t **c;
+
+    for(c = &rootconf.clients; *c && *c != client; c = &(*c)->next);
+    *c = client->next;
+} /*  }}} */
+
+/* client_unmange - unmanage a client {{{
+ */
+void
+client_unmanage(client_t *client)
+{
+    /* remove client from the chain */
+    client_detach(client);
+
+    xcb_grab_server(rootconf.connection);
+
+    xcb_ungrab_button(rootconf.connection, XCB_BUTTON_INDEX_ANY, client->window,
+                      XCB_BUTTON_MASK_ANY);
+    window_set_state(client->window, XCB_WM_STATE_WITHDRAWN);
+    free(client);
+    xcb_flush(rootconf.connection);
+    xcb_ungrab_server(rootconf.connection);
+    layout_update();
 } /*  }}} */
 
 // vim:et:sw=4:ts=8:softtabstop=4:cindent:fdm=marker:tw=80
