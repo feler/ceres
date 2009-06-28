@@ -27,6 +27,7 @@
 #include "structs.h"
 #include "client.h"
 #include "window.h"
+#include "layout.h"
 
 /* client_attach - attach a client to the chain {{{
  * @param client The client to attach
@@ -44,7 +45,7 @@ client_t *
 client_next_tiled(client_t *client)
 {
     for(; client && (client->is_floating); client = client->next);
-    return 0;
+    return client;
 } /* }}} */
 
 /* client_configure - configure a client with his new attributtes {{{
@@ -86,18 +87,12 @@ client_manage(xcb_window_t window, xcb_get_geometry_reply_t *window_geom)
     client->geometry.width = window_geom->width;
     client->geometry.height = window_geom->height;
     client->border_width = window_geom->border_width;
+
+    client_attach(client);
     
-    const uint32_t values[] = { 0, 0, 200, 200, 2 };
-
-    xcb_configure_window(rootconf.connection, client->window,
-            XCB_CONFIG_WINDOW_X | XCB_CONFIG_WINDOW_Y |
-            XCB_CONFIG_WINDOW_WIDTH | XCB_CONFIG_WINDOW_HEIGHT |
-            XCB_CONFIG_WINDOW_BORDER_WIDTH, values);
-    client_configure(client);
     xcb_map_window(rootconf.connection, client->window);
+    layout_tile();
     xcb_flush(rootconf.connection);
-
-    free(client);
 } /*  }}} */
 
 /* client_get_by_window - get a client by his window {{{
@@ -117,6 +112,27 @@ void
 client_set_focus(client_t *client)
 {
     window_set_focus(client->window);
+} /*  }}} */
+
+/* client_resize_and_move - resize and move a client {{{
+ */
+void
+client_resize_and_move(client_t *client, uint32_t x, uint32_t y, uint32_t width,
+                       uint32_t height)
+{
+    client->geometry.x = x;
+    client->geometry.y = y;
+    client->geometry.width = width;
+    client->geometry.height = height;
+
+    const uint32_t values[] = { x, y, width, height };
+
+    xcb_configure_window(rootconf.connection, client->window,
+                         XCB_CONFIG_WINDOW_X | XCB_CONFIG_WINDOW_Y |
+                         XCB_CONFIG_WINDOW_WIDTH | XCB_CONFIG_WINDOW_HEIGHT,
+                         values);
+    client_configure(client);
+    xcb_flush(rootconf.connection);
 } /*  }}} */
 
 // vim:et:sw=4:ts=8:softtabstop=4:cindent:fdm=marker:tw=80
