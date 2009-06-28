@@ -29,6 +29,21 @@
 
 static float mfact = 0.55;
 
+/* layout_update - reorganize the windows by the actual layout {{{
+ */
+void
+layout_update(void)
+{
+    
+    /*-------------------------------------------------------------------------
+     *  ATTENTION! actually we only have one layout (tiled), when we will have
+     *  more this functions should be modified.
+     *  TODO: do more layouts
+     *-------------------------------------------------------------------------
+     */
+    layout_tile();
+} /*  }}} */
+
 /* layout_tile - arrange function for do the tiling {{{
  */
 void
@@ -72,6 +87,6 @@ layout_tile(void)
         if(h != rootconf.workarea.height)
             y = client->geometry.y + ((client)->geometry.height + 2 * (client)->border_width);
     }
-} /*  }}} */
+} /*  }}} */ /*  }}} */
 
 // vim:et:sw=4:ts=8:softtabstop=4:cindent:fdm=marker:tw=80

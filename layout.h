@@ -22,6 +22,7 @@
 #ifndef CERES_LAYOUT_H
 #define CERES_LAYOUT_H
 
+void layout_update(void);
 void layout_tile(void);
 
 #endif
