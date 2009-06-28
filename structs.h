@@ -40,13 +40,15 @@
 
 #define lenof(foo) (ssize_t)sizeof(foo) / (ssize_t)sizeof(foo[0])
 
+/* area_t - represent an area {{{
+ */
 typedef struct area_t 
 {
     int16_t x;
     int16_t y;
     int16_t width;
     int16_t height;
-}area_t;
+} area_t; /*  }}} */
 
 /* font_t - font struct {{{
  */
@@ -104,6 +106,10 @@ struct ceres_t
     struct ev_timer timer;
     /* Clients */
     client_t *clients;
+    /* screen geometry */
+    area_t screen;
+    /* workarea */
+    area_t workarea;
 }; /*  }}} */
 
 typedef struct ceres_t ceres_t;
@@ -162,6 +168,14 @@ typedef struct key_bind_t
     xcb_keysym_t keysym;
     void (*func)(void);
 } key_bind_t; /*  }}} */
+
+/* layout_t - layout struct {{{
+ */
+typedef struct layout_t
+{
+    /* Function which will organize the desktop */
+    void (*arrange)(void);
+} layout_t; /*  }}} */
 
 #endif
 
