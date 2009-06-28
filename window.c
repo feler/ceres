@@ -103,11 +103,12 @@ window_take_focus(xcb_window_t window)
 void
 window_set_focus(xcb_window_t window)
 {
-   xcb_set_input_focus(rootconf.connection, XCB_INPUT_FOCUS_PARENT,
-           window, XCB_CURRENT_TIME);
+    bool can_take_focus = window_check_protocol(window, WM_TAKE_FOCUS); 
+    xcb_set_input_focus(rootconf.connection, XCB_INPUT_FOCUS_PARENT,
+                        window, XCB_CURRENT_TIME);
 
-   if(window_check_protocol(window, WM_TAKE_FOCUS))
-           window_take_focus(window);
+    if(can_take_focus)
+       window_take_focus(window);
 
 } /*  }}} */
 
