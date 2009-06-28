@@ -57,6 +57,34 @@ init_screens(void)
 
         init_ewmh(screen_counter);
     }
+
+    screen_update_geom();
+} /*  }}} */
+
+/* update_workarea - update the area which the windows can use
+ */
+void
+update_workarea(void)
+{
+    rootconf.workarea.x = rootconf.screen.x;
+    rootconf.workarea.y = rootconf.screen.y;
+    rootconf.workarea.width = rootconf.screen.width;
+    rootconf.workarea.height = rootconf.screen.height;
+}
+
+/* screen_update_geom - update the geometry of actual screen {{{
+ */
+void
+screen_update_geom(void)
+{
+    xcb_screen_t *screen = get_default_screen();
+
+    rootconf.screen.y = 0;
+    rootconf.screen.x = 0;
+    rootconf.screen.width = screen->width_in_pixels;
+    rootconf.screen.height = screen->height_in_pixels;
+
+    update_workarea();
 } /*  }}} */
 
 // vim:et:sw=4:ts=8:softtabstop=4:cindent:fdm=marker:tw=80

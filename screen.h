@@ -23,6 +23,8 @@
 #define CERES_SCREEN_H
 
 void init_screens(void);
+void screen_update_geom(void);
+void update_workarea(void);
 
 #endif
 
