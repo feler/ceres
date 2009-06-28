@@ -96,6 +96,36 @@ event_key_press(void *data __attribute__ ((unused)),
     return 0;
 } /*  }}} */
 
+/* event_destroy_notify - handle destroy notify event
+ */
+static int
+event_destroy_notify(void *data __attribute__ ((unused)),
+                     xcb_connection_t *connection,
+                     xcb_destroy_notify_event_t *ev)
+{
+    client_t *client = client_get_by_window(ev->window);
+
+    if(client)
+        client_unmanage(client);
+
+    return 0;
+}
+
+/* event_handle_unmapnotify - unmap notify event handler {{{
+ */
+static int
+event_unmap_notify(void *data __attribute__ ((unused)),
+                   xcb_connection_t *connection,
+                   xcb_unmap_notify_event_t *ev)
+{
+    client_t *client = client_get_by_window(ev->window);
+
+    if(client)
+        client_unmanage(client);
+
+    return 0;
+} /*  }}} */
+
 /* }}} */
 
 /* ceres_refresh - refresh all the components {{{
@@ -122,6 +152,8 @@ event_set_handlers(void)
     xcb_event_set_map_request_handler(&rootconf.event_h, event_map_request, NULL);
     xcb_event_set_enter_notify_handler(&rootconf.event_h, event_enter_notify, NULL);
     xcb_event_set_key_press_handler(&rootconf.event_h, event_key_press, NULL);
+    xcb_event_set_unmap_notify_handler(&rootconf.event_h, event_unmap_notify, NULL);
+    xcb_event_set_destroy_notify_handler(&rootconf.event_h, event_destroy_notify, NULL);
 } /*  }}} */
 
 // vim:et:sw=4:ts=8:softtabstop=4:cindent:fdm=marker:tw=80
