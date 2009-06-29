@@ -82,6 +82,12 @@ client_manage(xcb_window_t window, xcb_get_geometry_reply_t *window_geom)
     client_t *client;
     client = malloc(sizeof(client_t));
 
+    const uint32_t vals[] = { (XCB_EVENT_MASK_STRUCTURE_NOTIFY |
+                               XCB_EVENT_MASK_PROPERTY_CHANGE  |
+                               XCB_EVENT_MASK_ENTER_WINDOW     |
+                               XCB_EVENT_MASK_LEAVE_WINDOW     |
+                               XCB_EVENT_MASK_FOCUS_CHANGE) };
+
     client->window = window;
     client->geometry.x = window_geom->x;
     client->geometry.y = window_geom->y;
@@ -91,16 +97,13 @@ client_manage(xcb_window_t window, xcb_get_geometry_reply_t *window_geom)
 
     /* Event configuration */
     xcb_change_window_attributes(rootconf.connection, client->window,
-                                 XCB_CW:EVENT_MASK,
-                                 (XCB_EVENT_MASK_STRUCTURE_NORIFY |
-                                  XCB_EVENT_MASK_PROPERTY_CHANGE  |
-                                  XCB_EVENT_MASK_ENTER_WINDOW     |
-                                  XCB_EVENT_MASK_LEAVE_WINDOW     |
-                                  XCB_EVENT_MASK_FOCUS_CHANGE));
-
+                                 XCB_CW_EVENT_MASK,
+                                 vals);
     client_attach(client);
     client_attach_stack(client);
     
+    client_set_focus(client);
+
     xcb_map_window(rootconf.connection, client->window);
     layout_tile();
     xcb_flush(rootconf.connection);
@@ -131,11 +134,11 @@ client_set_focus(client_t *client)
         for(client = rootconf.stack; client; client = client->snext);
     if(client)
     {
-        //rootconf.client_focused->is_focus = false;
+        rootconf.client_focused->is_focus = false;
         window_set_focus(client->window);
-        //client->is_focus = true;
-        //client_update_border_color(client);
-        //rootconf.client_focused = client;
+        client->is_focus = true;
+        client_update_border_color(client);
+        rootconf.client_focused = client;
     }
     else
         /* we don't have more clients, focus root */
@@ -231,6 +234,16 @@ client_detach_stack(client_t *client)
 
     for(tmp = &rootconf.stack; *tmp && *tmp != client; tmp = &(*tmp)->snext);
     *tmp = client->snext;
+} /*  }}} */
+
+/* client_set_border_width - set the border width of a client {{{
+ */
+void
+client_set_border_width(client_t *client, uint32_t width)
+{
+    client->border_width = width;
+    xcb_configure_window(rootconf.connection, client->window,
+                         XCB_CONFIG_WINDOW_BORDER_WIDTH, &width);
 } /*  }}} */
 
 // vim:et:sw=4:ts=8:softtabstop=4:cindent:fdm=marker:tw=80
