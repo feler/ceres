@@ -89,6 +89,15 @@ client_manage(xcb_window_t window, xcb_get_geometry_reply_t *window_geom)
     client->geometry.height = window_geom->height;
     client->border_width = window_geom->border_width;
 
+    /* Event configuration */
+    xcb_change_window_attributes(rootconf.connection, client->window,
+                                 XCB_CW:EVENT_MASK,
+                                 (XCB_EVENT_MASK_STRUCTURE_NORIFY |
+                                  XCB_EVENT_MASK_PROPERTY_CHANGE  |
+                                  XCB_EVENT_MASK_ENTER_WINDOW     |
+                                  XCB_EVENT_MASK_LEAVE_WINDOW     |
+                                  XCB_EVENT_MASK_FOCUS_CHANGE));
+
     client_attach(client);
     client_attach_stack(client);
     
