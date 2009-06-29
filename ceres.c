@@ -87,6 +87,42 @@ event_pre_handler(EV_P_ ev_check *w, int revents)
     ceres_refresh();
 } /* }}} */
 
+/* init_apperance - init rootconf.apperance {{{
+ */
+static void
+init_apperance(void)
+{
+    xcb_screen_t *screen = get_default_screen();
+    uint8_t red, green, blue, alpha;
+
+    /* ------ GET COOKIES ------------- */
+    xcb_alloc_color_cookie_t cookies[1];
+
+    color_parse("#ffffff", strlen("#ffffff") - 1, &red, 
+                &green, &blue, &alpha); 
+    cookies[0] = xcb_alloc_color(rootconf.connection,
+                                 screen->default_colormap,
+                                 RGB_8TO16(red),
+                                 RGB_8TO16(green),
+                                 RGB_8TO16(blue));
+
+    color_parse("#000000", strlen("#000000") - 1, &red,
+                &green, &blue, &alpha);
+    cookies[1] = xcb_alloc_color(rootconf.connection,
+                                 screen->default_colormap,
+                                 RGB_8TO16(red),
+                                 RGB_8TO16(green),
+                                 RGB_8TO16(blue));
+    /* ------ END OF GET COOKIES ------ */
+
+    /* ------ GET AND PROCESS REPLIES - */
+    rootconf.appearance.border_color_focus =
+        &xcb_alloc_color_reply(rootconf.connection, cookies[0], NULL)->pixel;
+    rootconf.appearance.border_color_normal =
+        &xcb_alloc_color_reply(rootconf.connection, cookies[1], NULL)->pixel;
+    /* ------ END OF REPLIES ---------- */
+} /*  }}} */
+
 /* init_colors_and_font - init colors and font {{{
  */
 static int
@@ -96,6 +132,8 @@ init_colors_and_font(void)
     color_init("white", sizeof("white") - 1);
 
     rootconf.font = font_new("sans 8");
+
+    init_apperance();
 
     return 1;
 } /* }}} */
