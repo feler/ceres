@@ -33,6 +33,7 @@ void window_set_focus(xcb_window_t);
 void window_set_state(xcb_window_t, long);
 xcb_get_property_cookie_t window_get_state_prepare(xcb_window_t);
 uint32_t window_get_state(xcb_get_property_cookie_t);
+void window_set_border_color(xcb_window_t, uint32_t);
 
 #endif
 

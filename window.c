@@ -168,6 +168,16 @@ window_get_state(xcb_get_property_cookie_t cookie)
             return *(uint32_t *) xcb_get_property_value(reply);
     return 0;
 } /*  }}} */
+
 /* }}} */
+
+/* window_set_border_color - set the border color of a window  {{{
+ */
+void
+window_set_border_color(xcb_window_t window, uint32_t pixel)
+{
+    xcb_change_window_attributes(rootconf.connection, window,
+                                 XCB_CW_BORDER_PIXEL, pixel);
+} /*  }}} */
 
 // vim:et:sw=4:ts=8:softtabstop=4:cindent:fdm=marker:tw=80
