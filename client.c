@@ -134,11 +134,11 @@ client_set_focus(client_t *client)
         for(client = rootconf.stack; client; client = client->snext);
     if(client)
     {
-        rootconf.client_focused->is_focus = false;
+        //rootconf.client_focused->is_focus = false;
         window_set_focus(client->window);
-        client->is_focus = true;
-        client_update_border_color(client);
-        rootconf.client_focused = client;
+        //client->is_focus = true;
+        //client_update_border_color(client);
+        //rootconf.client_focused = client;
     }
     else
         /* we don't have more clients, focus root */
