@@ -8,6 +8,9 @@
 #include <assert.h>
 #include <stdio.h>
 
+#define RGB_8TO16(i)   (0xffff * ((i) & 0xff) / 0xff)
+#define RGB_16TO8(i)   (0xff * ((i) & 0xffff) / 0xffff)
+
 #define die(string, ...) _die(__LINE__, \
                                   __FUNCTION__, \
                                   string, ## __VA_ARGS__)
