@@ -98,7 +98,7 @@ init_apperance(void)
     /* ------ GET COOKIES ------------- */
     xcb_alloc_color_cookie_t cookies[1];
 
-    color_parse("#ffffff", strlen("#ffffff") - 1, &red, 
+    color_parse("#ffffff", strlen("#ffffff"), &red, 
                 &green, &blue, &alpha); 
     cookies[0] = xcb_alloc_color(rootconf.connection,
                                  screen->default_colormap,
@@ -106,7 +106,7 @@ init_apperance(void)
                                  RGB_8TO16(green),
                                  RGB_8TO16(blue));
 
-    color_parse("#000000", strlen("#000000") - 1, &red,
+    color_parse("#000000", strlen("#000000"), &red,
                 &green, &blue, &alpha);
     cookies[1] = xcb_alloc_color(rootconf.connection,
                                  screen->default_colormap,
