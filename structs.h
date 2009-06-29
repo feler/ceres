@@ -82,8 +82,10 @@ struct client_t
     uint32_t border_width;
     /* Next client */
     client_t *next;
-    bool is_floating;
+    bool is_floating, is_focus;
     uint32_t border_color;
+    /* the next client in the stack */
+    client_t *snext;
 }; /*  }}} */
 
 /* ** ceres_t - Main struct a.k.a rootconf  {{{
@@ -111,6 +113,16 @@ struct ceres_t
     area_t screen;
     /* workarea */
     area_t workarea;
+    /* Appearance */
+    struct appearance
+    {
+        const uint32_t *border_color_focus;
+        const uint32_t *border_color_normal;
+    } appearance;
+    /* Actual focused client */
+    client_t *client_focused;
+    /* client stack */
+    client_t *stack;
 }; /*  }}} */
 
 typedef struct ceres_t ceres_t;
