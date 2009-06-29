@@ -28,6 +28,9 @@
 #include <unistd.h>
 
 void client_detach(client_t *);
+void client_attach_stack(client_t *);
+void client_detach_stack(client_t *);
+void client_update_border_color(client_t *);
 void client_unmanage(client_t *);
 void client_manage(xcb_window_t, xcb_get_geometry_reply_t *);
 void client_attach(client_t *);

@@ -90,6 +90,7 @@ client_manage(xcb_window_t window, xcb_get_geometry_reply_t *window_geom)
     client->border_width = window_geom->border_width;
 
     client_attach(client);
+    client_attach_stack(client);
     
     xcb_map_window(rootconf.connection, client->window);
     layout_tile();
@@ -103,18 +104,32 @@ client_get_by_window(xcb_window_t window)
 {
     client_t *client;
 
-    for(client = rootconf.clients; client && client->window != window; client = client->next);
+    for(client = rootconf.clients; client && client->window != window;
+        client = client->next);
     return client;
 } /*  }}} */
 
 /* client_set_focus - give focus to a client {{{
+ *  if client is NULL the focus will be set to the next client
+ *  or if there is no more client to root window.
+ * @param client The client to give focus or NULL
  */
 void
 client_set_focus(client_t *client)
 {
+    if(!client)
+        /* no client specified, get next client */
+        for(client = rootconf.stack; client; client = client->snext);
     if(client)
+    {
+        //rootconf.client_focused->is_focus = false;
         window_set_focus(client->window);
+        //client->is_focus = true;
+        //client_update_border_color(client);
+        //rootconf.client_focused = client;
+    }
     else
+        /* we don't have more clients, focus root */
         window_set_focus(get_default_screen()->root);
 } /*  }}} */
 
@@ -167,6 +182,46 @@ client_unmanage(client_t *client)
     xcb_flush(rootconf.connection);
     xcb_ungrab_server(rootconf.connection);
     layout_update();
+} /*  }}} */
+
+/* client_update_border_color - set the client border color {{{
+ * in client->border_color
+ */
+void
+client_update_border_color(client_t *client)
+{
+    if(client->is_focus)
+        xcb_change_window_attributes(rootconf.connection, client->window,
+                                     XCB_CW_BORDER_PIXEL,
+                                     rootconf.appearance.border_color_focus);
+    else
+        xcb_change_window_attributes(rootconf.connection, client->window,
+                                     XCB_CW_BORDER_PIXEL,
+                                     rootconf.appearance.border_color_normal);
+    xcb_flush(rootconf.connection);
+} /*  }}} */
+
+/* client_attach_stack - attach a client the stack {{{
+ */
+void
+client_attach_stack(client_t *client)
+{
+    if(rootconf.stack)
+        client->snext = rootconf.stack;
+    else
+        client->snext = NULL;
+    rootconf.stack = client;
+} /*  }}} */
+
+/* client_detach_stack - detach a client from the stack {{{
+ */
+void
+client_detach_stack(client_t *client)
+{
+    client_t **tmp;
+
+    for(tmp = &rootconf.stack; *tmp && *tmp != client; tmp = &(*tmp)->snext);
+    *tmp = client->snext;
 } /*  }}} */
 
 // vim:et:sw=4:ts=8:softtabstop=4:cindent:fdm=marker:tw=80
