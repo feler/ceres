@@ -30,9 +30,6 @@
 #include "draw.h"
 #include "util.h"
 
-#define RGB_8TO16(i)   (0xffff * ((i) & 0xff) / 0xff)
-#define RGB_16TO8(i)   (0xff * ((i) & 0xffff) / 0xffff)
-
 /* color_parse - parse an hexadecimal color string to its component. {{{
  * \param colstr The color string.
  * \param len The color string length.
@@ -41,7 +38,7 @@
  * \param blue A pointer to the blue color to fill.
  * \param alpha A pointer to the alpha color to fill.
  */
-static int
+int
 color_parse(const char *colstr, ssize_t len,
             uint8_t *red, uint8_t *green, uint8_t *blue, uint8_t *alpha)
 {
@@ -127,15 +124,16 @@ int
 color_init(const char *colstr, ssize_t len)
 {
     uint8_t red, green, blue, alpha;
-/* The color is given in RGB value */ if(colstr[0] == '#') {
+    /* The color is given in RGB value */ 
+    if(colstr[0] == '#') {
         if(!color_parse(colstr, len, &red, &green, &blue, &alpha))
         {
-            warning("invalid color");
+            warning("invalid color: %s", colstr);
             return 0;
         }
 
         if(!init_RGB_color(RGB_8TO16(red), RGB_8TO16(green), RGB_8TO16(blue)))
-            warning("cannot alloc color");
+            warning("cannot alloc color: %s", colstr);
         else
             return 1;
         
@@ -144,7 +142,7 @@ color_init(const char *colstr, ssize_t len)
     else
     {
         if(!init_named_color(len, colstr))
-            warning("cannot alloc color");
+            warning("cannot alloc color: %s", colstr);
         else
             return 1;
 

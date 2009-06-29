@@ -34,6 +34,8 @@
 int init_RGB_color(uint16_t red, uint16_t green, uint16_t blue);
 int init_named_color(ssize_t, const char *);
 int color_init(const char *, ssize_t);
+int color_parse(const char *, ssize_t, uint8_t *, uint8_t *,
+                uint8_t *, uint8_t *);
 
 
 #endif
