@@ -391,6 +391,10 @@ main(int argc, char **argv)
 
     /* check events setup */
     ev_check xcheck;
+    ev_io xio = { .fd = -1 };
+    xfd = xcb_get_file_descriptor(rootconf.connection);
+    ev_io_init(&xio, &io_event, xfd, EV_READ);
+    ev_io_start(rootconf.loop, &xio);
     ev_check_init(&xcheck, &event_pre_handler);
     ev_check_start(rootconf.loop, &xcheck);
     ev_unref(rootconf.loop);
