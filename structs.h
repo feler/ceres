@@ -83,6 +83,7 @@ struct client_t
     /* Next client */
     client_t *next;
     bool is_floating;
+    uint32_t border_color;
 }; /*  }}} */
 
 /* ** ceres_t - Main struct a.k.a rootconf  {{{
