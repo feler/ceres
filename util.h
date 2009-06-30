@@ -23,6 +23,12 @@ void _die(int, const char *, const char *, ...)
 void _warning(int, const char *, const char *, ...)
     __attribute__ ((format(printf, 3, 4)));
 
+#define debug(string, ...) _debug(__LINE__, \
+                                __FUNCTION__, \
+                                string, ## __VA_ARGS__)
+void _debug(int, const char *, const char *, ...)
+    __attribute__ ((format(printf, 3, 4)));
+
 #define LENGTH(x)   (sizeof x / sizeof x[0])
 #endif
 
