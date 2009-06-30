@@ -78,7 +78,6 @@ client_configure(client_t *client)
 void
 client_manage(xcb_window_t window, xcb_get_geometry_reply_t *window_geom)
 {
-    fprintf(stderr, "Manage Window\n");
     client_t *client;
     client = malloc(sizeof(client_t));
 

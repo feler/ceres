@@ -53,13 +53,11 @@ layout_tile(void)
     unsigned int i, n;
     client_t *client;
 
-    fprintf(stderr, "tiling\n");
     /* Get the number of clients */
     for(n = 0, client = client_next_tiled(rootconf.clients);
         client; client = client_next_tiled(client->next), n++);
     if(n == 0)
         return;
-    fprintf(stderr, " n = %d\n", n);
 
     client = client_next_tiled(rootconf.clients);
     mw = mfact * rootconf.workarea.width;

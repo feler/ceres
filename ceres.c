@@ -72,8 +72,6 @@ event_pre_handler(EV_P_ ev_check *w, int revents)
      */
     while((event = xcb_poll_for_event(rootconf.connection)))
     {
-        fprintf(stderr, "Event, %d\n", XCB_EVENT_RESPONSE_TYPE(event));
-
         if(XCB_EVENT_RESPONSE_TYPE(event) == XCB_MOTION_NOTIFY)
             mouse = event;
         else
