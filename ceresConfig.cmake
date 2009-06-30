@@ -1,5 +1,4 @@
 set(PROJECT_CER_NAME ceres)
-set(PROJECT_CERCLIENT_NAME ceres-client)
 
 # If ${SOURCE_DIR} is a git repository VERSION is set to
 # `git describe` later.
@@ -211,10 +210,9 @@ set(CERES_COMPILE_HOSTNAME ${BUILDHOSTNAME})
 set(CERES_COMPILE_BY       $ENV{USER})
 set(CERES_RELEASE          ${CODENAME})
 set(CERES_SYSCONFDIR       ${XDG_CONFIG_DIR}/${PROJECT_CER_NAME})
-set(CERES_DATA_PATH        ${PREFIX}/share/${PROJECT_CER_NAME})
-set(CERES_LUA_LIB_PATH     ${CERES_DATA_PATH}/lib)
-set(CERES_ICON_PATH        ${CERES_DATA_PATH}/icons)
-set(CERES_THEMES_PATH      ${CERES_DATA_PATH}/themes)
 # }}}
+
+# Set cerpy source path
+set(CERPY_PATH ${SOURCE_DIR}/cerpy)
 
 # vim: filetype=cmake:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:encoding=utf-8:textwidth=80
