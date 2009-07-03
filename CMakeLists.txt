@@ -37,8 +37,7 @@ set(CER_SRCS
     ${SOURCE_DIR}/root.c
     ${SOURCE_DIR}/key.c
     ${SOURCE_DIR}/layout.c
-    ${SOURCE_DIR}/event.c
-    ${CERPY_PATH}/config.c)
+    ${SOURCE_DIR}/event.c)
 # }}}
 
 add_executable(${PROJECT_CER_NAME} 

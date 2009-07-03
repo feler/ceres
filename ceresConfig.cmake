@@ -45,12 +45,8 @@ a_find_program(LN_EXECUTABLE ln TRUE)
 a_find_program(GREP_EXECUTABLE grep TRUE)
 a_find_program(GIT_EXECUTABLE git FALSE)
 a_find_program(HOSTNAME_EXECUTABLE hostname FALSE)
-a_find_program(GPERF_EXECUTABLE gperf TRUE)
 # pkg-config
 find_package(PkgConfig)
-# Python
-a_find_program(PYTHON_EXECUTABLE python TRUE)
-find_package(PythonLibs)
 # Threads
 find_package(Threads)
 # }}}
@@ -128,24 +124,19 @@ endmacro()
 # Check for libev
 a_find_library(LIB_EV ev)
 
-# Needed for Python
 a_find_library(PTHREADS pthread)
-a_find_library(UTILS util)
 
 # Error check
 set(CERES_REQUIRED_LIBRARIES
     ${CERES_COMMON_REQUIRED_LDFLAGS}
     ${CERES_REQUIRED_LIBRARIES}
     ${LIB_EV}
-    ${PYTHON_LIBRARIES}
-    ${PTHREADS}
-    ${UTILS})
+    ${PTHREADS})
 
 set(CERES_REQUIRED_INCLUDE_DIRS
     ${CERES_COMMON_REQUIRED_INCLUDE_DIRS}
     ${CERES_REQUIRED_INCLUDE_DIRS}
-    ${CMAKE_THREAD_LIBS_INIT}
-    ${PYTHON_INCLUDE_PATH})
+    ${CMAKE_THREAD_LIBS_INIT})
 # }}}
 
 # {{{ Optional libraries
@@ -211,8 +202,5 @@ set(CERES_COMPILE_BY       $ENV{USER})
 set(CERES_RELEASE          ${CODENAME})
 set(CERES_SYSCONFDIR       ${XDG_CONFIG_DIR}/${PROJECT_CER_NAME})
 # }}}
-
-# Set cerpy source path
-set(CERPY_PATH ${SOURCE_DIR}/cerpy)
 
 # vim: filetype=cmake:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:encoding=utf-8:textwidth=80
