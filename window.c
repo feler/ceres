@@ -28,7 +28,7 @@
 
 #include "window.h"
 
-/* window_update_geometry  {{{
+/* window_configure  {{{
  * @window the window be changed
  * @new_geom the new geometry
  * @border border in pixels
