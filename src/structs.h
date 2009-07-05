@@ -29,6 +29,9 @@
 #include <xcb/xcb_keysyms.h>
 #include <xcb/xcb_icccm.h>
 
+/* Lua */
+#include <lua.h>
+
 /* cairo and pango */
 #include <cairo.h>
 #include <pango/pangocairo.h>
@@ -119,10 +122,16 @@ struct ceres_t
         const uint32_t *border_color_focus;
         const uint32_t *border_color_normal;
     } appearance;
+    struct config
+    {
+        float mfact;
+    } config;
     /* Actual focused client */
     client_t *client_focused;
     /* client stack */
     client_t *stack;
+    /* Lua state */
+    lua_State *L;
 }; /*  }}} */
 
 typedef struct ceres_t ceres_t;

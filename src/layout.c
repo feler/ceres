@@ -27,8 +27,6 @@
 #include "client.h"
 #include "layout.h"
 
-static float mfact = 0.55;
-
 /* layout_update - reorganize the windows by the actual layout {{{
  */
 void
@@ -60,7 +58,7 @@ layout_tile(void)
         return;
 
     client = client_next_tiled(rootconf.clients);
-    mw = mfact * rootconf.workarea.width;
+    mw = rootconf.config.mfact * rootconf.workarea.width;
     client_resize_and_move(client, rootconf.workarea.x, rootconf.workarea.y,
                            (n == 1 ? rootconf.workarea.width : mw) - 2 * client->border_width,
                            rootconf.workarea.height - 2 * client->border_width);    

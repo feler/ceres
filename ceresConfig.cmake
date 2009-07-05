@@ -11,6 +11,7 @@ project(${PROJECT_CER_NAME} C)
 set(CMAKE_BUILD_TYPE RELEASE)
 
 set(SOURCE_DIR ${SOURCE_DIR}/src)
+set(CLUA_DIR ${SOURCE_DIR}/lua)
 
 link_directories(/usr/local/lib)
 
@@ -51,6 +52,11 @@ a_find_program(HOSTNAME_EXECUTABLE hostname FALSE)
 find_package(PkgConfig)
 # Threads
 find_package(Threads)
+# Lua
+find_package(Lua51)
+if(NOT LUA51_FOUND AND NOT LUA50_FOUND)
+    message(FATAL_ERROR "lua library not found")
+endif()
 # }}}
 
 # {{{ Version stamp
@@ -126,19 +132,18 @@ endmacro()
 # Check for libev
 a_find_library(LIB_EV ev)
 
-a_find_library(PTHREADS pthread)
-
 # Error check
 set(CERES_REQUIRED_LIBRARIES
     ${CERES_COMMON_REQUIRED_LDFLAGS}
     ${CERES_REQUIRED_LIBRARIES}
     ${LIB_EV}
-    ${PTHREADS})
+    ${LUA_LIBRARIES})
 
 set(CERES_REQUIRED_INCLUDE_DIRS
     ${CERES_COMMON_REQUIRED_INCLUDE_DIRS}
     ${CERES_REQUIRED_INCLUDE_DIRS}
-    ${CMAKE_THREAD_LIBS_INIT})
+    ${CMAKE_THREAD_LIBS_INIT}
+    ${LUA_INCLUDE_DIR})
 # }}}
 
 # {{{ Optional libraries

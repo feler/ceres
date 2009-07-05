@@ -50,6 +50,7 @@ const char *VERSION = "0.01";
 #include "root.h"
 #include "key.h"
 #include "window.h"
+#include "lua/config.h"
 /* }}} */
 
 ceres_t rootconf;
@@ -474,6 +475,9 @@ main(int argc, char **argv)
 
     /* Set the cursor image in all root windows */
     root_window_set_cursor(68); // 68 = left arrow
+
+    clua_Init();
+    clua_ParseConfig();
 
     /* Scan windows */
     scan();
