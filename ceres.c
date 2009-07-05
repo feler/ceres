@@ -19,7 +19,7 @@
  *
  */
 
-const char *VERSION = "-0.0001 - not functional";
+const char *VERSION = "0.01";
 
 /* Includes {{{ */
 #include <stdio.h>
@@ -28,6 +28,7 @@ const char *VERSION = "-0.0001 - not functional";
 #include <locale.h>
 #include <getopt.h>
 #include <assert.h>
+#include <malloc.h>
 
 #include <ev.h>
 #include <basedir.h>
@@ -367,6 +368,9 @@ main(int argc, char **argv)
 
     /* Get XDG basedir info */
     xdgInitHandle(&xdg);
+
+    /* clear rootconf struct */
+    (void)memset((&rootconf), 0, sizeof(*(&rootconf)) * 1);
 
     /* Save args */
     rootconf.argv = argv[0];
