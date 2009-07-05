@@ -82,7 +82,7 @@ struct client_t
     uint32_t border_width;
     /* Next client */
     client_t *next;
-    bool is_floating, is_focus;
+    bool is_floating;
     uint32_t border_color;
     /* the next client in the stack */
     client_t *snext;
