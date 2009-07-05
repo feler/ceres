@@ -68,13 +68,9 @@ layout_tile(void)
     if(--n == 0)
         return;
 
-    x = (rootconf.workarea.x + mw > client->geometry.x + client->geometry.width)
-         ? client->geometry.x + client->geometry.y + 2 * client->border_width
-         : rootconf.workarea.x + mw;
+    x = rootconf.workarea.x + mw;
     y = rootconf.workarea.y;
-    w = (rootconf.workarea.x + mw > client->geometry.x + client->geometry.width)
-         ? rootconf.workarea.x + rootconf.workarea.width - x
-         : rootconf.workarea.width - mw;
+    w = rootconf.workarea.width - mw;
     h = rootconf.workarea.height / n;
 
     for(i = 0, client = client_next_tiled(client->next); client; client = client_next_tiled(client->next), i++)
