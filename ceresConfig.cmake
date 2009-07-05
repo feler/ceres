@@ -10,6 +10,8 @@ project(${PROJECT_CER_NAME} C)
 
 set(CMAKE_BUILD_TYPE RELEASE)
 
+set(SOURCE_DIR ${SOURCE_DIR}/src)
+
 link_directories(/usr/local/lib)
 
 # {{{ CFLAGS
