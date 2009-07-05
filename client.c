@@ -30,6 +30,9 @@
 #include "layout.h"
 #include "xutil.h"
 
+#define max(A, B)               ((A) > (B) ? (A) : (B))
+#define min(A, B)               ((A) < (B) ? (A) : (B))
+
 /* client_attach - attach a client to the chain {{{
  * @param client The client to attach
  */
@@ -92,7 +95,29 @@ client_manage(xcb_window_t window, xcb_get_geometry_reply_t *window_geom)
     client->geometry.y = window_geom->y;
     client->geometry.width = window_geom->width;
     client->geometry.height = window_geom->height;
-    client->border_width = window_geom->border_width;
+    client_set_border_width(client, 1);
+    /* 
+    if(client->geometry.width == rootconf.screen.width &&
+       client->geometry.height == rootconf.screen.height)
+    {
+        client->geometry.x = rootconf.screen.x;
+        client->geometry.y = rootconf.screen.y;
+        client->border_width = 0;
+    }
+    else
+    {
+        if(client->geometry.x + (client->geometry.width - 2 * client->border_width)
+           < rootconf.screen.x + rootconf.screen.width)
+           client->geometry.x = rootconf.screen.x + rootconf.screen.width -
+                                (client->geometry.width - 2 * client->border_width);
+        if(client->geometry.y + (client->geometry.height - 2 * client->border_width)
+           < rootconf.screen.y + rootconf.screen.height)
+           client->geometry.y = rootconf.screen.y + rootconf.screen.height -
+                                (client->geometry.height - 2 * client->border_width);
+        client->geometry.x = max(client->geometry.x, rootconf.screen.x);
+    }*/
+
+    client_configure(client);
 
     /* Event configuration */
     xcb_change_window_attributes(rootconf.connection, client->window,
@@ -104,6 +129,7 @@ client_manage(xcb_window_t window, xcb_get_geometry_reply_t *window_geom)
     client_set_focus(client);
 
     xcb_map_window(rootconf.connection, client->window);
+    window_set_state(client->window, XCB_WM_STATE_NORMAL);
     layout_tile();
     xcb_flush(rootconf.connection);
 } /*  }}} */
@@ -133,15 +159,15 @@ client_set_focus(client_t *client)
         for(client = rootconf.stack; client; client = client->snext);
     if(client)
     {
-        //rootconf.client_focused->is_focus = false;
+        client_detach_stack(client);
+        client_attach_stack(client);
         window_set_focus(client->window);
-        //client->is_focus = true;
-        //client_update_border_color(client);
-        //rootconf.client_focused = client;
     }
     else
         /* we don't have more clients, focus root */
         window_set_focus(get_default_screen()->root);
+    rootconf.client_focused = client;
+    client_update_border_color(client);
 } /*  }}} */
 
 /* client_resize_and_move - resize and move a client {{{
@@ -176,14 +202,17 @@ client_detach(client_t *client)
     *c = client->next;
 } /*  }}} */
 
-/* client_unmange - unmanage a client {{{
+/* client_unmanage - unmanage a client {{{
  */
 void
 client_unmanage(client_t *client)
 {
     /* remove client from the chain */
     client_detach(client);
+    client_detach_stack(client);
 
+    if(!client || !client->window)
+        return;
     xcb_grab_server(rootconf.connection);
 
     xcb_ungrab_button(rootconf.connection, XCB_BUTTON_INDEX_ANY, client->window,
@@ -201,7 +230,9 @@ client_unmanage(client_t *client)
 void
 client_update_border_color(client_t *client)
 {
-    if(client->is_focus)
+    if(!client)
+        return;
+    if(rootconf.client_focused == client)
         xcb_change_window_attributes(rootconf.connection, client->window,
                                      XCB_CW_BORDER_PIXEL,
                                      rootconf.appearance.border_color_focus);
@@ -243,6 +274,18 @@ client_set_border_width(client_t *client, uint32_t width)
     client->border_width = width;
     xcb_configure_window(rootconf.connection, client->window,
                          XCB_CONFIG_WINDOW_BORDER_WIDTH, &width);
+} /*  }}} */
+
+/* client_unfocus - unfocus a client {{{
+ */
+void
+client_unfocus(client_t *client)
+{
+    if(!client)
+        return;
+    xcb_change_window_attributes(rootconf.connection, client->window,
+                                 XCB_CW_BORDER_PIXEL,
+                                 rootconf.appearance.border_color_normal);
 } /*  }}} */
 
 // vim:et:sw=4:ts=8:softtabstop=4:cindent:fdm=marker:tw=80
