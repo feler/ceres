@@ -36,8 +36,24 @@ clua_GetNumber(lua_State *L, const char *name)
 {
     lua_getglobal(L, name);
     if(!lua_isnumber(L, -1))
-        die("config: '%s' must be number", name);
+        warning("config: '%s' must be a number", name);
     return lua_tonumber(L, -1);
+}
+
+/* clua_GetFloat - get a float
+ */
+void
+clua_GetFloat(const char *name, float default_val, float *to_set)
+{
+    lua_getglobal(rootconf.L, name);
+    if(!lua_isnumber(rootconf.L, -1))
+    {
+        warning("config: '%s' must be a number, setting default value", name);
+        *to_set = default_val;
+    }
+
+    *to_set = (float)lua_tonumber(rootconf.L, -1);
+    lua_pop(rootconf.L, 1);
 }
 
 /* clua_Init - init lua
@@ -61,7 +77,7 @@ clua_ParseConfig(void)
        lua_pcall(rootconf.L, 0, 0, 0))
         die("cannot run cofiguration file: %s\n", lua_tostring(rootconf.L, -1));
 
-    rootconf.config.mfact = (float)clua_GetNumber(rootconf.L, "mfact");
+    clua_GetFloat("mfact", 0.55, &rootconf.config.mfact);
 
     return true;
 }
