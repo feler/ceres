@@ -125,6 +125,8 @@ struct ceres_t
     struct config
     {
         float mfact;
+        const char *border_normal;
+        const char *border_focus;
     } config;
     /* Actual focused client */
     client_t *client_focused;

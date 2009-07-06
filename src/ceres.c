@@ -98,7 +98,7 @@ init_apperance(void)
     /* ------ GET COOKIES ------------- */
     xcb_alloc_color_cookie_t cookies[1];
 
-    color_parse("#ffffff", strlen("#ffffff"), &red, 
+    color_parse(rootconf.config.border_focus, strlen(rootconf.config.border_focus), &red, 
                 &green, &blue, &alpha); 
     cookies[0] = xcb_alloc_color(rootconf.connection,
                                  screen->default_colormap,
@@ -106,7 +106,7 @@ init_apperance(void)
                                  RGB_8TO16(green),
                                  RGB_8TO16(blue));
 
-    color_parse("#000000", strlen("#000000"), &red,
+    color_parse(rootconf.config.border_normal, strlen(rootconf.config.border_normal), &red,
                 &green, &blue, &alpha);
     cookies[1] = xcb_alloc_color(rootconf.connection,
                                  screen->default_colormap,
@@ -467,9 +467,6 @@ main(int argc, char **argv)
     /* alloc key symbols  */
     rootconf.key_symbols = xcb_key_symbols_alloc(rootconf.connection);
 
-    /* Init colors (black and white) and the font */
-    init_colors_and_font();
-
     /* Init all the screens (select for events too) */
     init_screens();
 
@@ -478,6 +475,9 @@ main(int argc, char **argv)
 
     clua_Init();
     clua_ParseConfig();
+
+    /* Init colors (black and white) and the font */
+    init_colors_and_font();
 
     /* Scan windows */
     scan();

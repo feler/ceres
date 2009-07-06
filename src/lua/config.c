@@ -48,11 +48,27 @@ clua_GetFloat(const char *name, float default_val, float *to_set)
     lua_getglobal(rootconf.L, name);
     if(!lua_isnumber(rootconf.L, -1))
     {
-        warning("config: '%s' must be a number, setting default value", name);
+        warning("config: '%s' must be a number (is it defined?), setting default value", name);
         *to_set = default_val;
     }
 
     *to_set = (float)lua_tonumber(rootconf.L, -1);
+    lua_pop(rootconf.L, 1);
+}
+
+/* clua_GetString - get a string
+ */
+void
+clua_GetString(const char *name, const char *default_val, const char **to_set)
+{
+    lua_getglobal(rootconf.L, name);
+    if(!lua_isstring(rootconf.L, -1))
+    {
+        warning("config: '%s' must be a string (is it defined?), setting default value", name);
+        *to_set = default_val;
+    }
+
+    *to_set = lua_tostring(rootconf.L, -1);
     lua_pop(rootconf.L, 1);
 }
 
@@ -78,6 +94,9 @@ clua_ParseConfig(void)
         die("cannot run cofiguration file: %s\n", lua_tostring(rootconf.L, -1));
 
     clua_GetFloat("mfact", 0.55, &rootconf.config.mfact);
+    clua_GetString("border_normal", "#000000", &rootconf.config.border_normal);
+    clua_GetString("border_focus",  "#ffffff", &rootconf.config.border_focus);
+    printf("%s\n", rootconf.config.border_normal);
 
     return true;
 }
