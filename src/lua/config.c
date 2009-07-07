@@ -29,7 +29,7 @@
 #include "util.h"
 #include "lua/config.h"
 
-/* clua_GetNumber - get a number from a provided with provided name
+/* clua_GetNumber - get a number from a provided with provided name {{{
  */
 lua_Number
 clua_GetNumber(lua_State *L, const char *name)
@@ -38,9 +38,9 @@ clua_GetNumber(lua_State *L, const char *name)
     if(!lua_isnumber(L, -1))
         warning("config: '%s' must be a number", name);
     return lua_tonumber(L, -1);
-}
+} /*  }}} */
 
-/* clua_GetFloat - get a float
+/* clua_GetFloat - get a float {{{
  */
 void
 clua_GetFloat(const char *name, float default_val, float *to_set)
@@ -54,9 +54,9 @@ clua_GetFloat(const char *name, float default_val, float *to_set)
 
     *to_set = (float)lua_tonumber(rootconf.L, -1);
     lua_pop(rootconf.L, 1);
-}
+} /*  }}} */
 
-/* clua_GetString - get a string
+/* clua_GetString - get a string {{{
  */
 void
 clua_GetString(const char *name, const char *default_val, const char **to_set)
@@ -70,9 +70,9 @@ clua_GetString(const char *name, const char *default_val, const char **to_set)
 
     *to_set = lua_tostring(rootconf.L, -1);
     lua_pop(rootconf.L, 1);
-}
+} /*  }}} */
 
-/* clua_Init - init lua
+/* clua_Init - init lua {{{
  */
 void
 clua_Init(void)
@@ -82,9 +82,9 @@ clua_Init(void)
 
     /* load base libraries */
     luaL_openlibs(rootconf.L);
-}
+} /*  }}} */
 
-/* clua_ParseConfig - parse the config file getting the options
+/* clua_ParseConfig - parse the config file getting the options {{{
  */
 bool
 clua_ParseConfig(void)
@@ -96,9 +96,8 @@ clua_ParseConfig(void)
     clua_GetFloat("mfact", 0.55, &rootconf.config.mfact);
     clua_GetString("border_normal", "#000000", &rootconf.config.border_normal);
     clua_GetString("border_focus",  "#ffffff", &rootconf.config.border_focus);
-    printf("%s\n", rootconf.config.border_normal);
 
     return true;
-}
+} /*  }}} */
 
 // vim:et:sw=4:ts=8:softtabstop=4:cindent:fdm=marker:tw=80
