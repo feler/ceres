@@ -124,6 +124,8 @@ struct ceres_t
     } appearance;
     struct config
     {
+        /* boder width to apply to new clients */
+        uint32_t border_width;
         float mfact;
         const char *border_normal;
         const char *border_focus;

@@ -29,6 +29,7 @@ void clua_Init(void);
 bool clua_ParseConfig(void);
 void clua_GetFloat(const char *, float, float *);
 void clua_GetString(const char *, const char *, const char **);
+void clua_GetUint32_t(const char *, uint32_t, uint32_t *);
 
 #endif
 

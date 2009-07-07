@@ -95,7 +95,7 @@ client_manage(xcb_window_t window, xcb_get_geometry_reply_t *window_geom)
     client->geometry.y = window_geom->y;
     client->geometry.width = window_geom->width;
     client->geometry.height = window_geom->height;
-    client_set_border_width(client, 1);
+    client_set_border_width(client, rootconf.config.border_width);
     /* 
     if(client->geometry.width == rootconf.screen.width &&
        client->geometry.height == rootconf.screen.height)
