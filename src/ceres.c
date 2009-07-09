@@ -50,6 +50,8 @@ const char *VERSION = "0.01";
 #include "root.h"
 #include "key.h"
 #include "window.h"
+#include "bar.h"
+#include "draw.h"
 #include "lua/config.h"
 /* }}} */
 
@@ -395,9 +397,10 @@ main(int argc, char **argv)
     if(!rootconf.loop)
         die("cannot init libev, bad $LIB_EV in environment");
 
-    /* Register signals */ 
+    /* Set up timer */
     ev_timer_init(&rootconf.timer, &on_timer, 0., 0.);
 
+    /* Register signals */ 
     ev_signal sigint,sigterm,sighup;
     ev_signal_init(&sigint, exit_signal, SIGINT);
     ev_signal_init(&sigterm, exit_signal, SIGTERM);
@@ -408,14 +411,10 @@ main(int argc, char **argv)
     ev_unref(rootconf.loop);
     ev_unref(rootconf.loop);
     ev_unref(rootconf.loop);   
-
     act.sa_handler = ceres_signal_handler;
     act.sa_flags = 0;
     memset(&act.sa_mask, 0, sizeof(sigset_t));
     sigaction(SIGSEGV, &act, 0);
-
-    /* Init Python, is planned to use python for config files */
-    //Py_Initialize();
 
     /* Connect to the X server */
     rootconf.connection = xcb_connect(NULL, &rootconf.screen_default);
@@ -473,11 +472,16 @@ main(int argc, char **argv)
     /* Set the cursor image in all root windows */
     root_window_set_cursor(68); // 68 = left arrow
 
+    /* Parse the configuration file */
     clua_Init();
     clua_ParseConfig();
 
     /* Init colors (black and white) and the font */
     init_colors_and_font();
+
+    /* Add a bar to display info */
+    rootconf.bar = bar_new();
+    bar_map(rootconf.bar);
 
     /* Scan windows */
     scan();

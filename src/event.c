@@ -32,6 +32,7 @@
 #include "xutil.h"
 #include "util.h"
 #include "key.h"
+#include "bar.h"
 
 void j_pressed(void);
 void j_pressed(void)
@@ -56,6 +57,8 @@ event_map_request(void *data __attribute__ ((unused)),
     geom_reply = xcb_get_geometry_reply(connection, geom_cookie, NULL);
 
     client_manage(ev->window, geom_reply);
+
+    bar_draw(rootconf.bar);
 
     return 0;
 } /*  }}} */
@@ -96,7 +99,7 @@ event_key_press(void *data __attribute__ ((unused)),
     return 0;
 } /*  }}} */
 
-/* event_destroy_notify - handle destroy notify event
+/* event_destroy_notify - handle destroy notify event {{{
  */
 static int
 event_destroy_notify(void *data __attribute__ ((unused)),
@@ -109,7 +112,7 @@ event_destroy_notify(void *data __attribute__ ((unused)),
         client_unmanage(client);
 
     return 0;
-}
+} /*  }}} */
 
 /* event_handle_unmapnotify - unmap notify event handler {{{
  */
@@ -133,6 +136,7 @@ event_unmap_notify(void *data __attribute__ ((unused)),
 int
 ceres_refresh(void)
 {
+    bar_refresh();
     return xcb_flush(rootconf.connection);
 } /*  }}} */
 

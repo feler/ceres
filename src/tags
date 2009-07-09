@@ -1,0 +1,92 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.7	//
+VERSION	ceres.c	/^const char *VERSION = "0.01";$/;"	v
+_debug	util.c	/^_debug(int line, const char *fct, const char *fmt, ...)$/;"	f
+_die	util.c	/^_die(int line, const char *fct, const char *fmt, ...)$/;"	f
+_warning	util.c	/^_warning(int line, const char *fct, const char *fmt, ...)$/;"	f
+at_exit	ceres.c	/^at_exit(void)$/;"	f	file:
+bar_draw	bar.c	/^bar_draw(bar_t *bar)$/;"	f
+bar_draw_rectangle	bar.c	/^bar_draw_rectangle(bar_t *bar, area_t geom)$/;"	f
+bar_draw_text	bar.c	/^bar_draw_text(bar_t *bar, char *text)$/;"	f
+bar_map	bar.c	/^bar_map(bar_t *bar)$/;"	f
+bar_need_update	bar.c	/^bar_need_update(bar_t *bar)$/;"	f
+bar_new	bar.c	/^bar_new(void)$/;"	f
+bar_refresh	bar.c	/^bar_refresh(void)$/;"	f
+ceres_refresh	event.c	/^ceres_refresh(void)$/;"	f
+ceres_restart	ceres.c	/^ceres_restart(void)$/;"	f	file:
+ceres_signal_handler	ceres.c	/^ceres_signal_handler(int signal_num)$/;"	f	file:
+check_invalid_connection	xutil.c	/^check_invalid_connection(xcb_connection_t *connection)$/;"	f
+check_other_wm	xutil.c	/^check_other_wm(xcb_connection_t *c)$/;"	f
+client_attach	client.c	/^client_attach(client_t *client)$/;"	f
+client_attach_stack	client.c	/^client_attach_stack(client_t *client)$/;"	f
+client_configure	client.c	/^client_configure(client_t *client)$/;"	f	file:
+client_detach	client.c	/^client_detach(client_t *client)$/;"	f
+client_detach_stack	client.c	/^client_detach_stack(client_t *client)$/;"	f
+client_get_by_window	client.c	/^client_get_by_window(xcb_window_t window)$/;"	f
+client_manage	client.c	/^client_manage(xcb_window_t window, xcb_get_geometry_reply_t *window_geom)$/;"	f
+client_next_tiled	client.c	/^client_next_tiled(client_t *client)$/;"	f
+client_resize_and_move	client.c	/^client_resize_and_move(client_t *client, uint32_t x, uint32_t y, uint32_t width,$/;"	f
+client_set_border_width	client.c	/^client_set_border_width(client_t *client, uint32_t width)$/;"	f
+client_set_focus	client.c	/^client_set_focus(client_t *client)$/;"	f
+client_unfocus	client.c	/^client_unfocus(client_t *client)$/;"	f
+client_unmanage	client.c	/^client_unmanage(client_t *client)$/;"	f
+client_update_border_color	client.c	/^client_update_border_color(client_t *client)$/;"	f
+client_update_name	client.c	/^client_update_name(client_t *client)$/;"	f
+color_init	color.c	/^color_init(const char *colstr, ssize_t len)$/;"	f
+color_parse	color.c	/^color_parse(const char *colstr, ssize_t len,$/;"	f
+event_destroy_notify	event.c	/^event_destroy_notify(void *data __attribute__ ((unused)),$/;"	f	file:
+event_enter_notify	event.c	/^event_enter_notify(void *data __attribute__ ((unused)),$/;"	f	file:
+event_key_press	event.c	/^event_key_press(void *data __attribute__ ((unused)),$/;"	f	file:
+event_map_request	event.c	/^event_map_request(void *data __attribute__ ((unused)),$/;"	f	file:
+event_pre_handler	ceres.c	/^event_pre_handler(EV_P_ ev_check *w, int revents)$/;"	f	file:
+event_set_handlers	event.c	/^event_set_handlers(void)$/;"	f
+event_unmap_notify	event.c	/^event_unmap_notify(void *data __attribute__ ((unused)),$/;"	f	file:
+ewmh_update_desktop_geometry	ewmh.c	/^ewmh_update_desktop_geometry(int screen_in)$/;"	f
+exit_help	ceres.c	/^exit_help(int code)$/;"	f	file:
+exit_signal	ceres.c	/^exit_signal(EV_P_ ev_signal *w, int revents)$/;"	f	file:
+font_new	draw.c	/^font_new(const char *font_name)$/;"	f
+get_default_screen	xutil.c	/^get_default_screen(void)$/;"	f
+get_string_from_atom	xutil.c	/^get_string_from_atom(xcb_window_t window, xcb_atom_t atom, char **text,$/;"	f
+init_RGB_color	color.c	/^init_RGB_color(uint16_t red, uint16_t green, uint16_t blue)$/;"	f
+init_apperance	ceres.c	/^init_apperance(void)$/;"	f	file:
+init_colors_and_font	ceres.c	/^init_colors_and_font(void)$/;"	f	file:
+init_ewmh	ewmh.c	/^init_ewmh(int screen_in)$/;"	f
+init_named_color	color.c	/^init_named_color(ssize_t len, const char *color_string)$/;"	f
+init_screens	screen.c	/^init_screens(void)$/;"	f
+io_event	ceres.c	/^io_event(EV_P_ ev_io *w, int revents)$/;"	f	file:
+j_pressed	event.c	/^void j_pressed(void)$/;"	f
+key_grab_to_window	key.c	/^key_grab_to_window(xcb_window_t window, key_bind_t key)$/;"	f
+keyboard_grab	key.c	/^keyboard_grab(void)$/;"	f
+keyboard_ungrab	key.c	/^keyboard_ungrab(void)$/;"	f
+layout_tile	layout.c	/^layout_tile(void)$/;"	f
+layout_update	layout.c	/^layout_update(void)$/;"	f
+main	ceres.c	/^main(int argc, char **argv)$/;"	f
+max	client.c	34;"	d	file:
+min	client.c	35;"	d	file:
+mouse_get_cursor	mouse.c	/^mouse_get_cursor(int cursor_id)$/;"	f
+mouse_get_position_in_window	mouse.c	/^mouse_get_position_in_window(xcb_window_t window, int16_t *x, int16_t *y,$/;"	f
+mouse_grab	mouse.c	/^mouse_grab(void)$/;"	f
+mouse_ungrab	mouse.c	/^mouse_ungrab(void)$/;"	f
+on_timer	event.c	/^on_timer(EV_P_ ev_timer *w, int revents)$/;"	f
+other_wm_error	ceres.c	/^other_wm_error(void *data,$/;"	f	file:
+restart_signal	ceres.c	/^restart_signal(EV_P_ ev_signal *w, int revents)$/;"	f	file:
+root_window_set_cursor	root.c	/^root_window_set_cursor(int cursor_id)$/;"	f
+rootconf	ceres.c	/^ceres_t rootconf;$/;"	v
+scan	ceres.c	/^scan(void)$/;"	f	file:
+screen_default_visual	xutil.c	/^screen_default_visual(xcb_screen_t *screen)$/;"	f
+screen_update_geom	screen.c	/^screen_update_geom(void)$/;"	f
+set_error_handler	xutil.c	/^set_error_handler(xcb_event_handlers_t *evenths,$/;"	f
+update_workarea	screen.c	/^update_workarea(void)$/;"	f
+visual_get_from_screen	xutil.c	/^visual_get_from_screen(xcb_screen_t *screen)$/;"	f
+window_check_protocol	window.c	/^window_check_protocol(xcb_window_t window, xcb_atom_t protocol)$/;"	f
+window_configure	window.c	/^window_configure(xcb_window_t window, uint16_t x, uint16_t y,$/;"	f
+window_get_state	window.c	/^window_get_state(xcb_get_property_cookie_t cookie)$/;"	f
+window_get_state_prepare	window.c	/^window_get_state_prepare(xcb_window_t window)$/;"	f
+window_set_focus	window.c	/^window_set_focus(xcb_window_t window)$/;"	f
+window_set_state	window.c	/^window_set_state(xcb_window_t window, long state)$/;"	f
+window_take_focus	window.c	/^window_take_focus(xcb_window_t window)$/;"	f
+x_error	ceres.c	/^x_error(void *data,$/;"	f	file:

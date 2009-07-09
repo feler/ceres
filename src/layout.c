@@ -26,6 +26,7 @@
 #include "structs.h"
 #include "client.h"
 #include "layout.h"
+#include "bar.h"
 
 /* layout_update - reorganize the windows by the actual layout {{{
  */
@@ -40,6 +41,8 @@ layout_update(void)
      *-------------------------------------------------------------------------
      */
     layout_tile();
+    /* Update the list of clients */
+    bar_update_task_list(rootconf.bar);
 } /*  }}} */
 
 /* layout_tile - arrange function for do the tiling {{{
@@ -57,6 +60,7 @@ layout_tile(void)
     if(n == 0)
         return;
 
+    printf("    %d\n", n);
     client = client_next_tiled(rootconf.clients);
     mw = rootconf.config.mfact * rootconf.workarea.width;
     client_resize_and_move(client, rootconf.workarea.x, rootconf.workarea.y,

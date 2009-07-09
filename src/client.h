@@ -40,6 +40,7 @@ void client_set_focus(client_t *);
 void client_resize_and_move(client_t *, uint32_t, uint32_t, uint32_t, uint32_t);
 void client_set_border_width(client_t *, uint32_t);
 void client_unfocus(client_t *);
+void client_update_name(client_t *);
 
 #endif
 

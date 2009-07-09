@@ -29,6 +29,7 @@
 #include "window.h"
 #include "layout.h"
 #include "xutil.h"
+#include "atoms/atoms.h"
 
 #define max(A, B)               ((A) > (B) ? (A) : (B))
 #define min(A, B)               ((A) < (B) ? (A) : (B))
@@ -96,26 +97,6 @@ client_manage(xcb_window_t window, xcb_get_geometry_reply_t *window_geom)
     client->geometry.width = window_geom->width;
     client->geometry.height = window_geom->height;
     client_set_border_width(client, rootconf.config.border_width);
-    /* 
-    if(client->geometry.width == rootconf.screen.width &&
-       client->geometry.height == rootconf.screen.height)
-    {
-        client->geometry.x = rootconf.screen.x;
-        client->geometry.y = rootconf.screen.y;
-        client->border_width = 0;
-    }
-    else
-    {
-        if(client->geometry.x + (client->geometry.width - 2 * client->border_width)
-           < rootconf.screen.x + rootconf.screen.width)
-           client->geometry.x = rootconf.screen.x + rootconf.screen.width -
-                                (client->geometry.width - 2 * client->border_width);
-        if(client->geometry.y + (client->geometry.height - 2 * client->border_width)
-           < rootconf.screen.y + rootconf.screen.height)
-           client->geometry.y = rootconf.screen.y + rootconf.screen.height -
-                                (client->geometry.height - 2 * client->border_width);
-        client->geometry.x = max(client->geometry.x, rootconf.screen.x);
-    }*/
 
     client_configure(client);
 
@@ -123,15 +104,21 @@ client_manage(xcb_window_t window, xcb_get_geometry_reply_t *window_geom)
     xcb_change_window_attributes(rootconf.connection, client->window,
                                  XCB_CW_EVENT_MASK,
                                  vals);
+
+    client_update_name(client);
+    fprintf(stderr, "   %s\n", client->name);
+
     client_attach(client);
     client_attach_stack(client);
     
+    window_set_state(client->window, XCB_WM_STATE_NORMAL);
+
     client_set_focus(client);
 
     xcb_map_window(rootconf.connection, client->window);
-    window_set_state(client->window, XCB_WM_STATE_NORMAL);
-    layout_tile();
     xcb_flush(rootconf.connection);
+
+    layout_update();
 } /*  }}} */
 
 /* client_get_by_window - get a client by his window {{{
@@ -286,6 +273,20 @@ client_unfocus(client_t *client)
     xcb_change_window_attributes(rootconf.connection, client->window,
                                  XCB_CW_BORDER_PIXEL,
                                  rootconf.appearance.border_color_normal);
+} /*  }}} */
+
+/* client_update_name - update the name of a client {{{
+ */
+void
+client_update_name(client_t *client)
+{
+    char *name;
+    ssize_t len;
+
+    if(!get_string_from_atom(client->window, _NET_WM_NAME, &name, &len))
+        if(!get_string_from_atom(client->window, WM_NAME, &name, &len))
+            return;
+    client->name = name;
 } /*  }}} */
 
 // vim:et:sw=4:ts=8:softtabstop=4:cindent:fdm=marker:tw=80

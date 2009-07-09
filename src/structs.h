@@ -70,13 +70,31 @@ typedef struct root_window_t
     xcb_query_tree_cookie_t tree_cookie;
 } root_window_t; /*  }}} */
 
+/* bar struct  {{{
+ */
+typedef struct bar_t
+{
+    xcb_gcontext_t gc;
+    struct draw
+    {
+        xcb_visualtype_t *visual;
+        xcb_pixmap_t pixmap;
+        cairo_surface_t *surface;
+        PangoLayout *layout;
+        cairo_t *cr;
+    } draw;
+    xcb_window_t window;
+    area_t geom;
+    bool need_update;
+} bar_t; /*  }}} */
+
 /* client_t - client struct (window, geometry, ...) {{{
  */
 typedef struct client_t client_t;
 struct client_t
 {
     /* Name */
-    char name[256];
+    char *name;
     /* window */
     xcb_window_t window;
     /* Geometry x, y, weight, height */
@@ -136,6 +154,8 @@ struct ceres_t
     client_t *stack;
     /* Lua state */
     lua_State *L;
+    /* bar */
+    bar_t *bar;
 }; /*  }}} */
 
 typedef struct ceres_t ceres_t;
