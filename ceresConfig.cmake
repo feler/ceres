@@ -50,8 +50,6 @@ a_find_program(GIT_EXECUTABLE git FALSE)
 a_find_program(HOSTNAME_EXECUTABLE hostname FALSE)
 # pkg-config
 find_package(PkgConfig)
-# Threads
-find_package(Threads)
 # Lua
 find_package(Lua51)
 if(NOT LUA51_FOUND AND NOT LUA50_FOUND)
