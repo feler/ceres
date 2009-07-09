@@ -56,6 +56,9 @@ screen_get(xcb_connection_t *connection, int screen)
 } /* }}} */
 
 xcb_screen_t *get_default_screen(void);
+xcb_visualtype_t *screen_default_visual(xcb_screen_t *);
+bool get_string_from_atom(xcb_window_t, xcb_atom_t, char **, ssize_t *);
+
 #endif
 
 // vim:et:sw=4:ts=8:softtabstop=4:cindent:fdm=marker:tw=80

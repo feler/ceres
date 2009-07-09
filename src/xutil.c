@@ -21,12 +21,16 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <malloc.h>
 
 #include <xcb/xcb.h>
+#include <xcb/xcb_atom.h>
+#include <xcb/xcb_icccm.h>
 
 #include "xutil.h"
 #include "util.h"
 #include "structs.h"
+#include "atoms/atoms.h"
 
 /* set_error_handler - Set the handler for followings errors {{{
  * 
@@ -111,5 +115,68 @@ get_default_screen(void)
 {
     return screen_get(rootconf.connection, rootconf.screen_default);
 } /* }}} */
+
+/* screen_default_visual - get the default of a screen {{{
+ */
+xcb_visualtype_t *
+screen_default_visual(xcb_screen_t *screen)
+{
+    if(!screen)
+        return NULL;
+    
+    xcb_depth_iterator_t depth_iter = xcb_screen_allowed_depths_iterator(screen);
+
+    if(depth_iter.data)
+        for(; depth_iter.rem; xcb_depth_next (&depth_iter))
+            for(xcb_visualtype_iterator_t visual_iter =
+                    xcb_depth_visuals_iterator (depth_iter.data);
+                 visual_iter.rem; xcb_visualtype_next (&visual_iter))
+                if(screen->root_visual == visual_iter.data->visual_id)
+                    return visual_iter.data;
+    return NULL;
+} /*  }}} */
+
+/* get_string_from_atom - get a string from an atom  {{{
+ */
+bool
+get_string_from_atom(xcb_window_t window, xcb_atom_t atom, char **text,
+                     ssize_t *len)
+{
+    xcb_get_text_property_reply_t reply;
+
+    if(!xcb_get_text_property_reply(rootconf.connection,
+                                    xcb_get_text_property_unchecked(rootconf.connection,
+                                                                    window,
+                                                                    atom),
+                                    &reply, NULL) ||
+       !reply.name_len || reply.format != 8)
+    {
+        /* An error ocurred, cleanup */
+        xcb_get_text_property_reply_wipe(&reply);
+        return false;
+    }
+
+    if(text && len)
+    {
+        if(reply.encoding == STRING
+           || reply.encoding == UTF8_STRING
+           || reply.encoding == COMPOUND_TEXT)
+        {
+            *text = ((char *)calloc(1, sizeof(char) * (reply.name_len + 1)));
+            /* The retrieved string is not NULL terminated */
+            memcpy(*text, reply.name, reply.name_len);
+            (*text)[reply.name_len] = '\0';
+            *len = reply.name_len;
+        }
+    }
+    else
+    {
+        *text = NULL;
+        *len  = 0;
+    }
+
+    xcb_get_text_property_reply_wipe(&reply);
+    return true;
+} /*  }}} */
 
 // vim:et:sw=4:ts=8:softtabstop=4:cindent:fdm=marker:tw=80
