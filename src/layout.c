@@ -60,7 +60,6 @@ layout_tile(void)
     if(n == 0)
         return;
 
-    printf("    %d\n", n);
     client = client_next_tiled(rootconf.clients);
     mw = rootconf.config.mfact * rootconf.workarea.width;
     client_resize_and_move(client, rootconf.workarea.x, rootconf.workarea.y,
@@ -83,6 +82,6 @@ layout_tile(void)
         if(h != rootconf.workarea.height)
             y = client->geometry.y + ((client)->geometry.height + 2 * (client)->border_width);
     }
-} /*  }}} */ /*  }}} */
+} /*  }}} */
 
 // vim:et:sw=4:ts=8:softtabstop=4:cindent:fdm=marker:tw=80

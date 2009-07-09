@@ -106,7 +106,6 @@ client_manage(xcb_window_t window, xcb_get_geometry_reply_t *window_geom)
                                  vals);
 
     client_update_name(client);
-    fprintf(stderr, "   %s\n", client->name);
 
     client_attach(client);
     client_attach_stack(client);
