@@ -65,7 +65,6 @@ font_new(const char *font_name)
     cairo_surface_destroy(surface);
 
     return font;
-    free(font);
 } /*  }}} */
 
 // vim:et:sw=4:ts=8:softtabstop=4:cindent:fdm=marker:tw=80
