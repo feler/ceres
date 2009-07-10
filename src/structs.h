@@ -128,6 +128,8 @@ struct ceres_t
     int screen_default;
     /* Events (or errors :P) handlers */
     xcb_event_handlers_t event_h;
+    /* Property handlers */
+    xcb_property_handlers_t prop_h;
     char *argv;
     /* Event loop */
     struct ev_loop *loop;

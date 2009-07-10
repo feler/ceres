@@ -53,6 +53,7 @@ const char *VERSION = "0.01";
 #include "bar.h"
 #include "draw.h"
 #include "lua/config.h"
+#include "property.h"
 /* }}} */
 
 ceres_t rootconf;
@@ -466,6 +467,9 @@ main(int argc, char **argv)
     /* alloc key symbols  */
     rootconf.key_symbols = xcb_key_symbols_alloc(rootconf.connection);
 
+    event_set_handlers();
+    property_handlers_init();
+
     /* Init all the screens (select for events too) */
     init_screens();
 
@@ -488,8 +492,6 @@ main(int argc, char **argv)
     
     /* Process for errors if any */
     xcb_event_poll_for_event_loop(&rootconf.event_h);
-
-    event_set_handlers();
 
     /* Ungrab server, we will receive events */
     xcb_ungrab_server(rootconf.connection);

@@ -110,13 +110,10 @@ client_manage(xcb_window_t window, xcb_get_geometry_reply_t *window_geom)
 
     client_attach(client);
     client_attach_stack(client);
-    
-    window_set_state(client->window, XCB_WM_STATE_NORMAL);
 
     client_set_focus(client);
 
     xcb_map_window(rootconf.connection, client->window);
-    xcb_flush(rootconf.connection);
 
     layout_update();
 } /*  }}} */
