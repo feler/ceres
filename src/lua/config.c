@@ -28,6 +28,7 @@
 #include "structs.h"
 #include "util.h"
 #include "lua/config.h"
+#include "color.h"
 
 /* clua_GetNumber - get a number from a provided with provided name {{{
  */
@@ -72,6 +73,24 @@ clua_GetString(const char *name, const char *default_val, const char **to_set)
     lua_pop(rootconf.L, 1);
 } /*  }}} */
 
+/* clua_GetColor - get a color_t struct by a string {{{
+ */
+void
+clua_GetColor(const char *name, color_t default_val, color_t *to_set)
+{
+    lua_getglobal(rootconf.L, name);
+    if(!lua_isstring(rootconf.L, -1))
+    {
+        *to_set = default_val;
+        return;
+    }
+
+    const char *string = lua_tostring(rootconf.L, -1);
+    uint8_t alpha;
+    color_parse(string, strlen(string) - 1, &to_set->red,
+                &to_set->green, &to_set->blue, &alpha);
+} /*  }}} */
+
 /* clua_GetUint32_t - get a uint32_t {{{
  */
 void
@@ -105,6 +124,7 @@ clua_Init(void)
 bool
 clua_ParseConfig(void)
 {
+    color_t color;
     char *home_dir = getenv("HOME");
     char config_path[strlen(home_dir) + strlen("/.config/ceres/rc.lua")];
     sprintf(config_path, "%s%s", home_dir, "/.config/ceres/rc.lua");
@@ -115,6 +135,18 @@ clua_ParseConfig(void)
     clua_GetFloat("mfact", 0.55, &rootconf.config.mfact);
     clua_GetString("border_normal", "#000000", &rootconf.config.border_normal);
     clua_GetString("border_focus",  "#ffffff", &rootconf.config.border_focus);
+
+    color.red   = 255;
+    color.green = 255;
+    color.blue  = 255;
+    clua_GetColor("bg_normal", color, &rootconf.config.bg_normal); 
+    clua_GetColor("fg_focus", color, &rootconf.config.fg_focus);
+    color.red   = 0;
+    color.green = 0;
+    color.blue  = 0;
+    clua_GetColor("fg_normal", color, &rootconf.config.fg_normal);
+    clua_GetColor("bg_focus", color, &rootconf.config.bg_focus);
+
     clua_GetUint32_t("border_width", 1, &rootconf.config.border_width);
 
     return true;

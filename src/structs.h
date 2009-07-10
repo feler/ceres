@@ -109,6 +109,15 @@ struct client_t
     client_t *snext;
 }; /*  }}} */
 
+/* color_t - define red, green and blue to be used with cairo {{{
+ */
+typedef struct color_t
+{
+    uint8_t red;
+    uint8_t green;
+    uint8_t blue;
+} color_t; /*  }}} */
+
 /* ** ceres_t - Main struct a.k.a rootconf  {{{
  */
 struct ceres_t
@@ -147,6 +156,10 @@ struct ceres_t
         float mfact;
         const char *border_normal;
         const char *border_focus;
+        color_t bg_normal;
+        color_t fg_normal;
+        color_t bg_focus;
+        color_t fg_focus;
     } config;
     /* Actual focused client */
     client_t *client_focused;
