@@ -26,6 +26,7 @@
 
 #include "structs.h"
 #include "client.h"
+#include "bar.h"
 #include "window.h"
 #include "layout.h"
 #include "xutil.h"
@@ -154,6 +155,8 @@ client_set_focus(client_t *client)
         window_set_focus(get_default_screen()->root);
     rootconf.client_focused = client;
     client_update_border_color(client);
+
+    bar_update_task_list(rootconf.bar);
 } /*  }}} */
 
 /* client_resize_and_move - resize and move a client {{{
@@ -207,6 +210,7 @@ client_unmanage(client_t *client)
     free(client);
     xcb_flush(rootconf.connection);
     xcb_ungrab_server(rootconf.connection);
+    client_set_focus(NULL);
     layout_update();
 } /*  }}} */
 
