@@ -1,0 +1,5 @@
+cscope.out
+tags
+build
+.build*
+ceres
