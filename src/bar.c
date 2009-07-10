@@ -100,7 +100,7 @@ bar_new(void)
     bar->draw.layout = pango_cairo_create_layout(bar->draw.cr);
 
     /* First draw, empty the bar */
-    bar_draw_rectangle(bar, bar->geom);
+    bar_draw_rectangle(bar, bar->geom, rootconf.config.bg_normal);
 
     xcb_flush(rootconf.connection);
 
@@ -110,16 +110,16 @@ bar_new(void)
 /* bar_draw_rectangle - draw a rectangle in a bar  {{{
  */
 void
-bar_draw_rectangle(bar_t *bar, area_t geom)
+bar_draw_rectangle(bar_t *bar, area_t geom, color_t color)
 {
     cairo_set_antialias(bar->draw.cr, CAIRO_ANTIALIAS_NONE);
     cairo_set_line_width(bar->draw.cr, 1.0);
     cairo_set_miter_limit(bar->draw.cr, 10.0);
     cairo_set_line_join(bar->draw.cr, CAIRO_LINE_JOIN_MITER);
     cairo_set_source_rgb(bar->draw.cr,
-                         1.0,
-                         0.0,
-                         0.0);
+                         color.red / 255.0,
+                         color.green / 255.0,
+                         color.blue / 255.0);
     cairo_rectangle(bar->draw.cr, geom.x, geom.y,
                     geom.width, geom.height);
     cairo_fill(bar->draw.cr);
@@ -161,7 +161,7 @@ bar_need_update(bar_t *bar)
 /* bar_draw_text - draw text in a bar using pango and cairo {{{
  */
 void
-bar_draw_text(bar_t *bar, const char *text, area_t where)
+bar_draw_text(bar_t *bar, const char *text, area_t where, color_t color)
 {
     pango_layout_set_text(bar->draw.layout, text, -1);
     pango_layout_set_font_description(bar->draw.layout, pango_font_description_from_string("Terminus 8"));
@@ -169,7 +169,10 @@ bar_draw_text(bar_t *bar, const char *text, area_t where)
     pango_layout_set_height(bar->draw.layout, where.height);
 
     cairo_move_to(bar->draw.cr, where.x, where.y);
-    cairo_set_source_rgb(bar->draw.cr, 1.0, 1.0, 1.0);
+    cairo_set_source_rgb(bar->draw.cr,
+                         color.red / 255.0,
+                         color.green / 255.0,
+                         color.blue / 255.0);
     
     pango_cairo_update_layout(bar->draw.cr, bar->draw.layout);
     pango_cairo_show_layout(bar->draw.cr, bar->draw.layout);
@@ -188,7 +191,7 @@ bar_update_task_list(bar_t *bar)
     area_t area;
 
     /* clean the bar */
-    bar_draw_rectangle(bar, bar->geom);
+    bar_draw_rectangle(bar, bar->geom, rootconf.config.bg_normal);
 
     /* Get number of clients */
     for(n = 0, client = client_next_tiled(rootconf.clients);
@@ -207,9 +210,15 @@ bar_update_task_list(bar_t *bar)
         area.width  = single_width;
         area.height = bar->geom.height;
 
-        bar_draw_rectangle(bar, area);
+        if(rootconf.client_focused == client)
+            bar_draw_rectangle(bar, area, rootconf.config.bg_focus);
+        else
+            bar_draw_rectangle(bar, area, rootconf.config.bg_normal);
         area.y = 1;
-        bar_draw_text(bar, client->name, area);
+        if(rootconf.client_focused == client)
+            bar_draw_text(bar, client->name, area, rootconf.config.fg_focus);
+        else
+            bar_draw_text(bar, client->name, area, rootconf.config.fg_normal);
     }
 } /*  }}} */
 

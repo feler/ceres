@@ -24,10 +24,10 @@
 
 bar_t *bar_new(void);
 void bar_map(bar_t  *);
-void bar_draw_rectangle(bar_t *, area_t);
+void bar_draw_rectangle(bar_t *, area_t, color_t);
 void bar_draw(bar_t *);
 void bar_refresh(void);
-void bar_draw_text(bar_t *, const char *, area_t);
+void bar_draw_text(bar_t *, const char *, area_t, color_t);
 void bar_need_update(bar_t *);
 void bar_update_task_list(bar_t *);
 
