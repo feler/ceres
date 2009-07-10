@@ -162,50 +162,6 @@ typedef struct ceres_t ceres_t;
 
 extern ceres_t rootconf;
 
-/*  Color related structs {{{
- */
-typedef struct
-{
-    uint8_t red;
-    uint8_t green;
-    uint8_t blue;
-    uint8_t alpha;
-    bool initialized;
-} color_t;
-
-typedef struct
-{
-    color_t *color;
-    const char *colstr;
-    xcb_alloc_named_color_cookie_t cookie;
-    bool has_error;
-} color_init_cookie_t;
-
-typedef struct
-{
-    uint32_t pixel;
-    uint16_t red;
-    uint16_t green;
-    uint16_t blue;
-    uint16_t alpha;
-    bool initialized;
-} xcolor_t;
-
-typedef struct
-{
-    union
-    {
-        xcb_alloc_color_cookie_t cookie_hexa;
-        xcb_alloc_named_color_cookie_t cookie_named;
-    };
-
-    xcolor_t *color;
-    bool is_hexa;
-    bool has_error;
-    const char *colstr;
-} xcolor_init_request_t;
-/* }}} */
-
 /* key_bind_t - key bind struct {{{
  */
 typedef struct key_bind_t
