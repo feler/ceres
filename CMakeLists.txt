@@ -39,6 +39,7 @@ set(CER_SRCS
     ${SOURCE_DIR}/layout.c
     ${SOURCE_DIR}/event.c
     ${SOURCE_DIR}/bar.c
+    ${SOURCE_DIR}/property.c
     ${CLUA_DIR}/config.c
     )
 # }}}

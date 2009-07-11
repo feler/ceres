@@ -4,21 +4,65 @@
 !_TAG_PROGRAM_NAME	Exuberant Ctags	//
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.7	//
+CERES_BAR_H	bar.h	23;"	d
+CERES_CLIENT_H	client.h	23;"	d
+CERES_COLOR_H	color.h	23;"	d
+CERES_DRAW_H	draw.h	23;"	d
+CERES_EVENT_H	event.h	23;"	d
+CERES_EWMH_H	ewmh.h	23;"	d
+CERES_KEY_H	key.h	23;"	d
+CERES_LAYOUT_H	layout.h	23;"	d
+CERES_MOUSE_H	mouse.h	24;"	d
+CERES_PROPERTY_H	property.h	23;"	d
+CERES_ROOT_H	root.h	23;"	d
+CERES_SCREEN_H	screen.h	23;"	d
+CERES_STRUCTS_H	structs.h	23;"	d
+CERES_UTIL_H	util.h	23;"	d
+CERES_WINDOW_H	window.h	23;"	d
+CERES_XUTIL_H	xutil.h	23;"	d
+L	structs.h	/^    lua_State *L;$/;"	m	struct:ceres_t
+LENGTH	util.h	53;"	d
+RGB_16TO8	util.h	33;"	d
+RGB_8TO16	util.h	32;"	d
 VERSION	ceres.c	/^const char *VERSION = "0.01";$/;"	v
+WindowsKey	key.h	29;"	d
 _debug	util.c	/^_debug(int line, const char *fct, const char *fmt, ...)$/;"	f
 _die	util.c	/^_die(int line, const char *fct, const char *fmt, ...)$/;"	f
 _warning	util.c	/^_warning(int line, const char *fct, const char *fmt, ...)$/;"	f
+appearance	structs.h	/^    struct appearance$/;"	s	struct:ceres_t
+appearance	structs.h	/^    } appearance;$/;"	m	struct:ceres_t	typeref:struct:ceres_t::appearance
+area_t	structs.h	/^typedef struct area_t $/;"	s
+area_t	structs.h	/^} area_t; \/*  }}} *\/$/;"	t	typeref:struct:area_t
+argv	structs.h	/^    char *argv;$/;"	m	struct:ceres_t
+arrange	structs.h	/^    void (*arrange)(void);$/;"	m	struct:layout_t
 at_exit	ceres.c	/^at_exit(void)$/;"	f	file:
+attr_list	draw.h	/^    PangoAttrList *attr_list;$/;"	m	struct:draw_text_context_t
+bar	structs.h	/^    bar_t *bar;$/;"	m	struct:ceres_t
 bar_draw	bar.c	/^bar_draw(bar_t *bar)$/;"	f
-bar_draw_rectangle	bar.c	/^bar_draw_rectangle(bar_t *bar, area_t geom)$/;"	f
-bar_draw_text	bar.c	/^bar_draw_text(bar_t *bar, char *text)$/;"	f
+bar_draw_rectangle	bar.c	/^bar_draw_rectangle(bar_t *bar, area_t geom, color_t color)$/;"	f
+bar_draw_text	bar.c	/^bar_draw_text(bar_t *bar, const char *text, area_t where, color_t color)$/;"	f
 bar_map	bar.c	/^bar_map(bar_t *bar)$/;"	f
 bar_need_update	bar.c	/^bar_need_update(bar_t *bar)$/;"	f
 bar_new	bar.c	/^bar_new(void)$/;"	f
 bar_refresh	bar.c	/^bar_refresh(void)$/;"	f
+bar_t	structs.h	/^typedef struct bar_t$/;"	s
+bar_t	structs.h	/^} bar_t; \/*  }}} *\/$/;"	t	typeref:struct:bar_t
+bar_update_task_list	bar.c	/^bar_update_task_list(bar_t *bar)$/;"	f
+bg_focus	structs.h	/^        color_t bg_focus;$/;"	m	struct:ceres_t::config
+bg_normal	structs.h	/^        color_t bg_normal;$/;"	m	struct:ceres_t::config
+blue	structs.h	/^    uint8_t blue;$/;"	m	struct:color_t
+border_color	structs.h	/^    uint32_t border_color;$/;"	m	struct:client_t
+border_color_focus	structs.h	/^        const uint32_t *border_color_focus;$/;"	m	struct:ceres_t::appearance
+border_color_normal	structs.h	/^        const uint32_t *border_color_normal;$/;"	m	struct:ceres_t::appearance
+border_focus	structs.h	/^        const char *border_focus;$/;"	m	struct:ceres_t::config
+border_normal	structs.h	/^        const char *border_normal;$/;"	m	struct:ceres_t::config
+border_width	structs.h	/^        uint32_t border_width;$/;"	m	struct:ceres_t::config
+border_width	structs.h	/^    uint32_t border_width;$/;"	m	struct:client_t
 ceres_refresh	event.c	/^ceres_refresh(void)$/;"	f
 ceres_restart	ceres.c	/^ceres_restart(void)$/;"	f	file:
 ceres_signal_handler	ceres.c	/^ceres_signal_handler(int signal_num)$/;"	f	file:
+ceres_t	structs.h	/^struct ceres_t$/;"	s
+ceres_t	structs.h	/^typedef struct ceres_t ceres_t;$/;"	t	typeref:struct:ceres_t
 check_invalid_connection	xutil.c	/^check_invalid_connection(xcb_connection_t *connection)$/;"	f
 check_other_wm	xutil.c	/^check_other_wm(xcb_connection_t *c)$/;"	f
 client_attach	client.c	/^client_attach(client_t *client)$/;"	f
@@ -26,20 +70,38 @@ client_attach_stack	client.c	/^client_attach_stack(client_t *client)$/;"	f
 client_configure	client.c	/^client_configure(client_t *client)$/;"	f	file:
 client_detach	client.c	/^client_detach(client_t *client)$/;"	f
 client_detach_stack	client.c	/^client_detach_stack(client_t *client)$/;"	f
+client_focused	structs.h	/^    client_t *client_focused;$/;"	m	struct:ceres_t
 client_get_by_window	client.c	/^client_get_by_window(xcb_window_t window)$/;"	f
 client_manage	client.c	/^client_manage(xcb_window_t window, xcb_get_geometry_reply_t *window_geom)$/;"	f
 client_next_tiled	client.c	/^client_next_tiled(client_t *client)$/;"	f
 client_resize_and_move	client.c	/^client_resize_and_move(client_t *client, uint32_t x, uint32_t y, uint32_t width,$/;"	f
 client_set_border_width	client.c	/^client_set_border_width(client_t *client, uint32_t width)$/;"	f
 client_set_focus	client.c	/^client_set_focus(client_t *client)$/;"	f
+client_t	structs.h	/^struct client_t$/;"	s
+client_t	structs.h	/^typedef struct client_t client_t;$/;"	t	typeref:struct:client_t
 client_unfocus	client.c	/^client_unfocus(client_t *client)$/;"	f
 client_unmanage	client.c	/^client_unmanage(client_t *client)$/;"	f
 client_update_border_color	client.c	/^client_update_border_color(client_t *client)$/;"	f
 client_update_name	client.c	/^client_update_name(client_t *client)$/;"	f
+clients	structs.h	/^    client_t *clients;$/;"	m	struct:ceres_t
 color_init	color.c	/^color_init(const char *colstr, ssize_t len)$/;"	f
 color_parse	color.c	/^color_parse(const char *colstr, ssize_t len,$/;"	f
+color_t	structs.h	/^typedef struct color_t$/;"	s
+color_t	structs.h	/^} color_t; \/*  }}} *\/$/;"	t	typeref:struct:color_t
+config	structs.h	/^    struct config$/;"	s	struct:ceres_t
+config	structs.h	/^    } config;$/;"	m	struct:ceres_t	typeref:struct:ceres_t::config
+connection	structs.h	/^    xcb_connection_t *connection;$/;"	m	struct:ceres_t
+cr	structs.h	/^        cairo_t *cr;$/;"	m	struct:bar_t::draw
+debug	util.h	47;"	d
+description	structs.h	/^    PangoFontDescription *description;$/;"	m	struct:__anon1
+die	util.h	35;"	d
+draw	structs.h	/^    struct draw$/;"	s	struct:bar_t
+draw	structs.h	/^    } draw;$/;"	m	struct:bar_t	typeref:struct:bar_t::draw
+draw_text_context_t	draw.h	/^typedef struct draw_text_context_t$/;"	s
+draw_text_context_t	draw.h	/^} draw_text_context_t; \/*  }}} *\/$/;"	t	typeref:struct:draw_text_context_t
 event_destroy_notify	event.c	/^event_destroy_notify(void *data __attribute__ ((unused)),$/;"	f	file:
 event_enter_notify	event.c	/^event_enter_notify(void *data __attribute__ ((unused)),$/;"	f	file:
+event_h	structs.h	/^    xcb_event_handlers_t event_h;$/;"	m	struct:ceres_t
 event_key_press	event.c	/^event_key_press(void *data __attribute__ ((unused)),$/;"	f	file:
 event_map_request	event.c	/^event_map_request(void *data __attribute__ ((unused)),$/;"	f	file:
 event_pre_handler	ceres.c	/^event_pre_handler(EV_P_ ev_check *w, int revents)$/;"	f	file:
@@ -48,9 +110,20 @@ event_unmap_notify	event.c	/^event_unmap_notify(void *data __attribute__ ((unuse
 ewmh_update_desktop_geometry	ewmh.c	/^ewmh_update_desktop_geometry(int screen_in)$/;"	f
 exit_help	ceres.c	/^exit_help(int code)$/;"	f	file:
 exit_signal	ceres.c	/^exit_signal(EV_P_ ev_signal *w, int revents)$/;"	f	file:
+fg_focus	structs.h	/^        color_t fg_focus;$/;"	m	struct:ceres_t::config
+fg_normal	structs.h	/^        color_t fg_normal;$/;"	m	struct:ceres_t::config
+font	structs.h	/^    font_t *font;$/;"	m	struct:ceres_t
 font_new	draw.c	/^font_new(const char *font_name)$/;"	f
+font_t	structs.h	/^} font_t; \/*  }}} *\/$/;"	t	typeref:struct:__anon1
+func	structs.h	/^    void (*func)(void);$/;"	m	struct:key_bind_t
+gc	structs.h	/^    xcb_gcontext_t gc;$/;"	m	struct:bar_t
+geom	structs.h	/^    area_t geom;$/;"	m	struct:bar_t
+geometry	structs.h	/^    area_t geometry;$/;"	m	struct:client_t
 get_default_screen	xutil.c	/^get_default_screen(void)$/;"	f
 get_string_from_atom	xutil.c	/^get_string_from_atom(xcb_window_t window, xcb_atom_t atom, char **text,$/;"	f
+green	structs.h	/^    uint8_t green;$/;"	m	struct:color_t
+height	structs.h	/^    int height;$/;"	m	struct:__anon1
+height	structs.h	/^    int16_t height;$/;"	m	struct:area_t
 init_RGB_color	color.c	/^init_RGB_color(uint16_t red, uint16_t green, uint16_t blue)$/;"	f
 init_apperance	ceres.c	/^init_apperance(void)$/;"	f	file:
 init_colors_and_font	ceres.c	/^init_colors_and_font(void)$/;"	f	file:
@@ -58,30 +131,70 @@ init_ewmh	ewmh.c	/^init_ewmh(int screen_in)$/;"	f
 init_named_color	color.c	/^init_named_color(ssize_t len, const char *color_string)$/;"	f
 init_screens	screen.c	/^init_screens(void)$/;"	f
 io_event	ceres.c	/^io_event(EV_P_ ev_io *w, int revents)$/;"	f	file:
+is_floating	structs.h	/^    bool is_floating;$/;"	m	struct:client_t
 j_pressed	event.c	/^void j_pressed(void)$/;"	f
+key_bind_t	structs.h	/^typedef struct key_bind_t$/;"	s
+key_bind_t	structs.h	/^} key_bind_t; \/*  }}} *\/$/;"	t	typeref:struct:key_bind_t
 key_grab_to_window	key.c	/^key_grab_to_window(xcb_window_t window, key_bind_t key)$/;"	f
+key_symbols	structs.h	/^    xcb_key_symbols_t *key_symbols;$/;"	m	struct:ceres_t
 keyboard_grab	key.c	/^keyboard_grab(void)$/;"	f
 keyboard_ungrab	key.c	/^keyboard_ungrab(void)$/;"	f
+keys	config.h	/^static key_bind_t keys[] =$/;"	v
+keysym	structs.h	/^    xcb_keysym_t keysym;$/;"	m	struct:key_bind_t
+layout	structs.h	/^        PangoLayout *layout;$/;"	m	struct:bar_t::draw
+layout_t	structs.h	/^typedef struct layout_t$/;"	s
+layout_t	structs.h	/^} layout_t; \/*  }}} *\/$/;"	t	typeref:struct:layout_t
 layout_tile	layout.c	/^layout_tile(void)$/;"	f
 layout_update	layout.c	/^layout_update(void)$/;"	f
+len	draw.h	/^    ssize_t len;$/;"	m	struct:draw_text_context_t
+lenof	structs.h	44;"	d
+loop	structs.h	/^    struct ev_loop *loop;$/;"	m	struct:ceres_t	typeref:struct:ceres_t::ev_loop
 main	ceres.c	/^main(int argc, char **argv)$/;"	f
-max	client.c	34;"	d	file:
-min	client.c	35;"	d	file:
+max	client.c	35;"	d	file:
+mfact	structs.h	/^        float mfact;$/;"	m	struct:ceres_t::config
+min	client.c	36;"	d	file:
+modifier	structs.h	/^    uint16_t modifier;$/;"	m	struct:key_bind_t
 mouse_get_cursor	mouse.c	/^mouse_get_cursor(int cursor_id)$/;"	f
 mouse_get_position_in_window	mouse.c	/^mouse_get_position_in_window(xcb_window_t window, int16_t *x, int16_t *y,$/;"	f
 mouse_grab	mouse.c	/^mouse_grab(void)$/;"	f
 mouse_ungrab	mouse.c	/^mouse_ungrab(void)$/;"	f
+name	structs.h	/^    char *name;$/;"	m	struct:client_t
+need_update	structs.h	/^    bool need_update;$/;"	m	struct:bar_t
+next	structs.h	/^    client_t *next;$/;"	m	struct:client_t
 on_timer	event.c	/^on_timer(EV_P_ ev_timer *w, int revents)$/;"	f
 other_wm_error	ceres.c	/^other_wm_error(void *data,$/;"	f	file:
+pixmap	structs.h	/^        xcb_pixmap_t pixmap;$/;"	m	struct:bar_t::draw
+prop_h	structs.h	/^    xcb_property_handlers_t prop_h;$/;"	m	struct:ceres_t
+property_handlers_init	property.c	/^property_handlers_init(void)$/;"	f
+property_wm_name	property.c	/^static int property_wm_name(void *data __attribute__ ((unused)),$/;"	f	file:
+property_xrootpmap_id	property.c	/^static int property_xrootpmap_id(void *data __attribute__ ((unused)),$/;"	f	file:
+red	structs.h	/^    uint8_t red;$/;"	m	struct:color_t
 restart_signal	ceres.c	/^restart_signal(EV_P_ ev_signal *w, int revents)$/;"	f	file:
 root_window_set_cursor	root.c	/^root_window_set_cursor(int cursor_id)$/;"	f
+root_window_t	structs.h	/^typedef struct root_window_t$/;"	s
+root_window_t	structs.h	/^} root_window_t; \/*  }}} *\/$/;"	t	typeref:struct:root_window_t
 rootconf	ceres.c	/^ceres_t rootconf;$/;"	v
 scan	ceres.c	/^scan(void)$/;"	f	file:
+screen	structs.h	/^    area_t screen;$/;"	m	struct:ceres_t
+screen_default	structs.h	/^    int screen_default;$/;"	m	struct:ceres_t
 screen_default_visual	xutil.c	/^screen_default_visual(xcb_screen_t *screen)$/;"	f
+screen_get	xutil.h	/^screen_get(xcb_connection_t *connection, int screen)$/;"	f
 screen_update_geom	screen.c	/^screen_update_geom(void)$/;"	f
 set_error_handler	xutil.c	/^set_error_handler(xcb_event_handlers_t *evenths,$/;"	f
+snext	structs.h	/^    client_t *snext;$/;"	m	struct:client_t
+stack	structs.h	/^    client_t *stack;$/;"	m	struct:ceres_t
+surface	structs.h	/^        cairo_surface_t *surface;$/;"	m	struct:bar_t::draw
+text	draw.h	/^    char *text;$/;"	m	struct:draw_text_context_t
+timer	structs.h	/^    struct ev_timer timer;$/;"	m	struct:ceres_t	typeref:struct:ceres_t::ev_timer
+tree_cookie	structs.h	/^    xcb_query_tree_cookie_t tree_cookie;$/;"	m	struct:root_window_t
 update_workarea	screen.c	/^update_workarea(void)$/;"	f
+visual	structs.h	/^        xcb_visualtype_t *visual;$/;"	m	struct:bar_t::draw
 visual_get_from_screen	xutil.c	/^visual_get_from_screen(xcb_screen_t *screen)$/;"	f
+warning	util.h	41;"	d
+width	structs.h	/^    int16_t width;$/;"	m	struct:area_t
+window	structs.h	/^    xcb_window_t window;$/;"	m	struct:bar_t
+window	structs.h	/^    xcb_window_t window;$/;"	m	struct:client_t
+window	structs.h	/^    xcb_window_t window;$/;"	m	struct:root_window_t
 window_check_protocol	window.c	/^window_check_protocol(xcb_window_t window, xcb_atom_t protocol)$/;"	f
 window_configure	window.c	/^window_configure(xcb_window_t window, uint16_t x, uint16_t y,$/;"	f
 window_get_state	window.c	/^window_get_state(xcb_get_property_cookie_t cookie)$/;"	f
@@ -89,4 +202,7 @@ window_get_state_prepare	window.c	/^window_get_state_prepare(xcb_window_t window
 window_set_focus	window.c	/^window_set_focus(xcb_window_t window)$/;"	f
 window_set_state	window.c	/^window_set_state(xcb_window_t window, long state)$/;"	f
 window_take_focus	window.c	/^window_take_focus(xcb_window_t window)$/;"	f
+workarea	structs.h	/^    area_t workarea;$/;"	m	struct:ceres_t
+x	structs.h	/^    int16_t x;$/;"	m	struct:area_t
 x_error	ceres.c	/^x_error(void *data,$/;"	f	file:
+y	structs.h	/^    int16_t y;$/;"	m	struct:area_t

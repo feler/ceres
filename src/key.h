@@ -26,6 +26,13 @@
 
 #include "structs.h"
 
+/* Define some key modifiers, use i.e: Alt + Ctrl = 0x8 + 0x4 = 0x12
+ * Windows + Shift = 0x40 + 0x1 */
+#define WindowsKey 0x40
+#define ShiftKey   0x1
+#define ControlKey 0x4
+#define AltKey     0x8
+
 bool keyboard_grab(void);
 void keyboard_ungrab(void);
 void key_grab_to_window(xcb_window_t, key_bind_t);
