@@ -216,6 +216,8 @@ bar_update_task_list(bar_t *bar)
             bar_draw_rectangle(bar, area, rootconf.config.bg_normal);
         area.y = 1;
         area.x ++;
+        area.height = -1;
+        area.width = -1;
         if(rootconf.client_focused == client)
             bar_draw_text(bar, client->name, area, rootconf.config.fg_focus);
         else
