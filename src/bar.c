@@ -205,7 +205,7 @@ bar_update_task_list(bar_t *bar)
     for(i = 0, client = client_next_tiled(rootconf.clients);
         client; client = client_next_tiled(client->next), i++)
     {
-        area.x      = i == 0 ? 0 : single_width * i;
+        area.x      = (i == 0 ? 0 : single_width * i) + 1;
         area.y      = 0;
         area.width  = single_width;
         area.height = bar->geom.height;
