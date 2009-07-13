@@ -33,7 +33,7 @@
 void
 layout_update(void)
 {
-    
+    client_set_focus(NULL);
     /*-------------------------------------------------------------------------
      *  ATTENTION! actually we only have one layout (tiled), when we will have
      *  more this functions should be modified.

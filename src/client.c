@@ -2,7 +2,7 @@
  * client.c - client functions
  *
  * Copyright © 2009 Ángel Alonso (feler) <feler@archlinux.us> 
- * 
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -50,7 +50,7 @@ client_attach(client_t *client)
 client_t *
 client_next_tiled(client_t *client)
 {
-    for(; client && (client->is_floating); client = client->next);
+    for(; client && client->is_floating; client = client->next);
     return client;
 } /* }}} */
 
@@ -99,6 +99,8 @@ client_manage(xcb_window_t window, xcb_get_geometry_reply_t *window_geom)
     client->geometry.height = window_geom->height;
     client_set_border_width(client, rootconf.config.border_width);
 
+    client->is_floating = NULL;
+
     client_configure(client);
 
     /* Event configuration */
@@ -111,9 +113,13 @@ client_manage(xcb_window_t window, xcb_get_geometry_reply_t *window_geom)
     client_attach(client);
     client_attach_stack(client);
 
-    client_set_focus(client);
+    /*client_resize_and_move(client, client->geometry.x + 2 * rootconf.screen.width,*/
+                           /*client->geometry.y, client->geometry.width,*/
+                           /*client->geometry.height);*/
 
     xcb_map_window(rootconf.connection, client->window);
+
+    window_set_state(client->window, XCB_WM_STATE_NORMAL);
 
     layout_update();
 } /*  }}} */

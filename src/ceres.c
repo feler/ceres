@@ -375,6 +375,7 @@ main(int argc, char **argv)
 
     /* clear rootconf struct */
     (void)memset((&rootconf), 0, sizeof(*(&rootconf)) * 1);
+    rootconf.clients = NULL;
 
     /* Save args */
     rootconf.argv = argv[0];
